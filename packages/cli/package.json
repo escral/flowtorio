@@ -1,0 +1,51 @@
+{
+    "name": "@flowtorio/cli",
+    "version": "0.0.0",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/escral/flowtorio.git",
+        "directory": "packages/cli"
+    },
+    "license": "MIT",
+    "type": "module",
+    "bin": {
+        "flow": "./dist/cli.mjs"
+    },
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": "./dist/index.js",
+        "./package.json": "./package.json"
+    },
+    "author": "Alexander Topalo <topaloalexander@gmail.com>",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "release": "pnpm build && pnpm new-version -s && npm publish --access public",
+        "build": "tsdown",
+        "dev": "tsdown --watch",
+        "test": "vitest",
+        "test:types": "vitest --typecheck.only",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "c12": "^3.3.1",
+        "citty": "^0.1.6",
+        "consola": "^3.4.2",
+        "defu": "^6.1.4"
+    },
+    "devDependencies": {
+        "@escral/lint": "^2.0.10",
+        "@escral/tsconfig": "^0.2.1",
+        "@escral/versioning": "^1.5",
+        "tsdown": "^0.15.9",
+        "typescript": "^5.9.3",
+        "vitest": "^4.0.1"
+    },
+    "engines": {
+        "node": ">=18.0"
+    },
+    "packageManager": "pnpm@10.19.0"
+}

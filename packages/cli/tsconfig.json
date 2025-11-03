@@ -1,0 +1,14 @@
+{
+    "extends": "@escral/tsconfig/cli",
+    "compilerOptions": {
+        "paths": {
+            "~/*": [
+                "./src/*"
+            ]
+        }
+    },
+    "include": [
+        "src",
+        "tests"
+    ]
+}
