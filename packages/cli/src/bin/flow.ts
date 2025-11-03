@@ -1,5 +1,7 @@
-import consola from "consola";
+import consola from 'consola'
 
 consola.success('Hurray!')
 
-const a=1
+const a = 1
+
+console.log(a)

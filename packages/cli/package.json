@@ -8,9 +8,6 @@
     },
     "license": "MIT",
     "type": "module",
-    "bin": {
-        "flow": "./dist/cli.mjs"
-    },
     "main": "./dist/index.js",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
@@ -41,7 +38,6 @@
         "@escral/tsconfig": "^0.2.1",
         "@escral/versioning": "^1.5",
         "tsdown": "^0.15.9",
-        "typescript": "^5.9.3",
         "vitest": "^4.0.1"
     },
     "engines": {

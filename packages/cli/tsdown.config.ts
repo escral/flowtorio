@@ -6,14 +6,14 @@ export default defineConfig([
         format: ['esm'],
         dts: true,
         sourcemap: true,
-        clean: true
+        clean: true,
     },
     {
         entry: { cli: 'src/bin/flow.ts' },
         format: ['esm'],
         dts: false,
         sourcemap: true,
-        clean: false
-    }
+        clean: false,
+    },
 ])
 

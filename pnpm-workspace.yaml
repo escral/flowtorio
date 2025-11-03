@@ -1,2 +1,11 @@
 packages:
-  - "packages/*"
+  - packages/*
+
+onlyBuiltDependencies:
+  - esbuild
+  - yorkie
+
+publicHoistPattern:
+  - eslint
+
+verifyDepsBeforeRun: install
