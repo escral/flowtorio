@@ -1,0 +1,29 @@
+{
+    "name": "flowtorio",
+    "private": true,
+    "version": "0.0.0",
+    "license": "MIT",
+    "workspaces": [
+        "packages/*"
+    ],
+    "author": "Alexander Topalo <topaloalexander@gmail.com>",
+    "scripts": {
+        "build": "pnpm -r -F ./packages/* run build",
+        "dev": "pnpm -F @flowtorio/cli dev",
+        "test": "pnpm -r -F ./packages/* run test",
+        "lint": "pnpm -r -F ./packages/* run lint",
+        "release": "pnpm -r -F ./packages/* run release"
+    },
+    "devDependencies": {
+        "@escral/lint": "^2.0",
+        "@escral/tsconfig": "^0.2.1",
+        "@escral/versioning": "^1.5",
+        "@types/node": "^22.10",
+        "typescript": "^5.9.3",
+        "vitest": "^4.0.1"
+    },
+    "engines": {
+        "node": ">=18.0"
+    },
+    "packageManager": "pnpm@10.19.0"
+}
