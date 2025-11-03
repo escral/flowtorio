@@ -1,3 +1,3 @@
-import config from '@escral/lint';
+import config from '@escral/lint'
 
 export default config()
