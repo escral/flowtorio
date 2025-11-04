@@ -13,12 +13,14 @@
         "dev": "pnpm -F @flowtorio/cli dev",
         "test": "pnpm -r -F ./packages/* run test",
         "lint": "pnpm -r -F ./packages/* run lint",
-        "release": "pnpm -r -F ./packages/* run release"
+        "release": "pnpm -r -F ./packages/* run release",
+        "flow": "pnpm --filter @flowtorio/cli run flow"
     },
     "devDependencies": {
         "@escral/lint": "^2.0",
         "@escral/tsconfig": "^0.2.1",
         "@escral/versioning": "^1.5",
+        "@eslint/compat": "^1.4.1",
         "@types/node": "^22.10",
         "typescript": "^5.9.3",
         "vitest": "^4.0.1"

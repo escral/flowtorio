@@ -6,6 +6,9 @@
         "url": "git+https://github.com/escral/flowtorio.git",
         "directory": "packages/cli"
     },
+    "bin": {
+        "flow": "./dist/cli.mjs"
+    },
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.js",
@@ -25,7 +28,8 @@
         "dev": "tsdown --watch",
         "test": "vitest",
         "test:types": "vitest --typecheck.only",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "flow": "bun ./src/bin/flow.ts"
     },
     "dependencies": {
         "c12": "^3.3.1",
