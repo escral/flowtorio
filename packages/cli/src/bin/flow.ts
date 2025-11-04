@@ -3,6 +3,6 @@ import { stdin } from 'process'
 
 consola.success('Hurray!')
 
-stdin.read().then(data => {
-    consola.log(data)
+stdin.on('data', data => {
+    consola.log('Input:', data.toString())
 })
