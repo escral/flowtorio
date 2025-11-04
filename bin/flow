@@ -1,0 +1,4 @@
+#!/bin/bash
+
+exec bun ./packages/cli/src/bin/flow.ts
+
