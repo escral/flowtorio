@@ -8,4 +8,9 @@ const gitignorePath = fileURLToPath(new URL('.gitignore', import.meta.url))
 export default [
     includeIgnoreFile(gitignorePath, 'Imported .gitignore patterns'),
     ...await config(),
+    {
+        rules: {
+            'vue/prefer-import-from-vue': 'off',
+        },
+    },
 ]

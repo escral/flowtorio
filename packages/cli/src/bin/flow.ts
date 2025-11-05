@@ -1,87 +1,99 @@
-import {
-    useScreen,
-    useKeys,
-    useRender,
-    useInputOnce,
-    drawBorder,
-    fillLines,
-} from '~/utils/tui'
+import { useApp } from '~/tui/useApp'
+import { useKeys } from '~/utils/tui'
+import tk from 'terminal-kit'
+import { InputMode } from '~/app/useInputMode'
+import { watch } from '@vue/reactivity'
 
-const {
-    term,
-    dispose,
-} = useScreen()
-useKeys({
-    CTRL_C: exit,
-    ESCAPE: exit,
-    q: exit,
+const { run, logger, onRender, render, input } = useApp({
+    logger: ({
+        logs: [],
+        log(...args: any[]) {
+            const term = tk.terminal
+            term.moveTo(1, 1)
+            term.eraseLine()
+            this.logs.push(...args)
+            render()
+        },
+    }) as any,
 })
 
-const items: string[] = []
-let first: string | null = null
+run()
 
-function computeHistory(boxH: number): string[] {
-    if (!first) {
-        return []
+useKeys({
+    r: () => {
+        logger?.log('You pressed R!')
+    },
+})
+
+onRender((term) => {
+    const lastLog = logger?.logs[logger.logs.length - 1]
+
+    if (lastLog) {
+        term.moveTo(1, 1)
+        term.bold.bgBlue(' LOG ')
+        term.moveTo(8, 1)
+        term(lastLog.toString())
     }
-    const rest = items.slice(1)
-    const remaining = Math.max(0, boxH - 1)
+})
 
-    if (rest.length <= remaining) {
-        return [first, ...rest]
-    }
-    const tail = rest.slice(-(remaining - 1))
-    const hidden = rest.length - (remaining - 1)
-
-    return [first, `… ${hidden} hidden …`, ...tail]
-}
-
-function render() {
-    term.clear()
+onRender((term) => {
     const W = term.width
     const H = term.height
 
-    const histH = Math.max(3, H - 3)           // history box height
-    drawBorder(term, 1, 1, W, histH, 'History')
+    if (input.mode.value === InputMode.Command) {
+        term.moveTo(1, H - 1)
+        term.bold.bgGreen(' COMMAND ')
+    }
+})
 
-    const innerX = 2, innerY = 2
-    const innerW = W - 2, innerH = histH - 2
-    fillLines(term, innerX, innerY, innerW, innerH, computeHistory(innerH))
+const term = tk.terminal
 
-    // Input label
-    drawBorder(term, 1, histH + 1, W, 3, 'Input')
-    term.moveTo(3, H - 1)
-    term.styleReset()
-}
+watch(input.mode, () => {
+    if (input.mode.value === InputMode.Command) {
+        startInputLoop()
+    } else {
+        stopInputLoop()
+    }
+})
 
-useRender(render)
+let stopInputLoopFn: (() => void) | undefined = undefined
 
-async function loop() {
-    // noinspection InfiniteLoopJS
+async function inputLoop() {
+    let stopped = false
+
     while (true) {
-        const value = await useInputOnce()
-
-        if (value === undefined) {
-            continue
-        }
-        const s = value.trim()
-
-        if (!s) {
-            continue
+        if (stopped) {
+            break
         }
 
-        if (first === null) {
-            first = s
-        } else {
-            items.push(s)
+        term.moveTo(12, term.height - 1)
+
+        const { abort, promise } = term.inputField({
+            cancelable: true,
+        })
+
+        stopInputLoopFn = async () => {
+            stopped = true
+            abort()
+            stopInputLoopFn = undefined
         }
-        render()
+
+        const value = await promise
+
+        term.eraseLine()
+
+        logger?.log('Input:', value)
     }
 }
 
-function exit() {
-    dispose()
-    process.exit(0)
+function startInputLoop() {
+    inputLoop().catch(() => {
+        logger?.log('Error in input loop')
+    })
 }
 
-loop().catch(() => exit())
+function stopInputLoop() {
+    if (stopInputLoopFn) {
+        stopInputLoopFn()
+    }
+}
