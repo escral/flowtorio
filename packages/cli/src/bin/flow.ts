@@ -3,9 +3,7 @@ import {
     useKeys,
     useRender,
     useInputOnce,
-    drawLines,
     drawBorder,
-    fillLines,
 } from '~/utils/tui'
 
 const {
