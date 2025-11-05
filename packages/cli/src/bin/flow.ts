@@ -3,7 +3,8 @@ import {
     useKeys,
     useRender,
     useInputOnce,
-    drawBorder, fillLines,
+    drawBorder,
+    fillLines,
 } from '~/utils/tui'
 
 const {
@@ -56,7 +57,7 @@ function render() {
 useRender(render)
 
 async function loop() {
-    // always render before asking
+    // noinspection InfiniteLoopJS
     while (true) {
         const value = await useInputOnce()
 
