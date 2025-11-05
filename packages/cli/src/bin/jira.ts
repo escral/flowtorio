@@ -1,7 +1,7 @@
 import { Version3Client } from 'jira.js'
 
 const client = new Version3Client({
-    host: 'https://your-domain.atlassian.net',
+    host: 'https://tbc-it.atlassian.net',
     authentication: {
         basic: {
             email: process.env.JIRA_EMAIL!,
@@ -10,10 +10,19 @@ const client = new Version3Client({
     },
 })
 
+const start = Date.now()
+
 const res = await client.issueSearch.searchForIssuesUsingJqlEnhancedSearch({
-    jql: 'project = TBC AND statusCategory != Done',
+    jql: 'type in subTaskIssueTypes()\n' +
+        'and assignee = currentUser()\n' +
+        'and status != Done and status != "Don\'t Need"\n' +
+        'and sprint in openSprints()\n' +
+        'ORDER BY project, parent, updated DESC',
     maxResults: 10,
-    fields: ['summary', 'status', 'assignee', 'updated'],
+    fields: ['summary', 'status', 'parent_id', 'updated'],
+    failFast: true,
 })
 
-console.log(res.issues?.map(i => `${i.key} — ${i.fields?.summary}`))
+console.log(res.issues?.map(i => i.fields))
+
+console.log(`Fetched ${res.issues?.length} issues in ${Date.now() - start}ms`)
