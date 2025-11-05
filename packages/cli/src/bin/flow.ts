@@ -3,7 +3,7 @@ import {
     useKeys,
     useRender,
     useInputOnce,
-    drawBorder,
+    drawBorder, fillLines,
 } from '~/utils/tui'
 
 const {
@@ -42,6 +42,10 @@ function render() {
 
     const histH = Math.max(3, H - 3)           // history box height
     drawBorder(term, 1, 1, W, histH, 'History')
+
+    const innerX = 2, innerY = 2
+    const innerW = W - 2, innerH = histH - 2
+    fillLines(term, innerX, innerY, innerW, innerH, computeHistory(innerH))
 
     // Input label
     drawBorder(term, 1, histH + 1, W, 3, 'Input')

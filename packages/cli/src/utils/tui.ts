@@ -45,14 +45,38 @@ export async function useInputOnce(opts?: {
     prompt?: string
 }): Promise<string | undefined> {
     const y = term.height - 1
-    term.moveTo(3, y)
+    term.moveTo(1, y)
 
     if (opts?.prompt) {
         term(opts.prompt + ' ')
     }
 
+    term.eraseLine()
+
     return term.inputField({
         cancelable: true,
+        keyBindings: {
+            ENTER: 'submit',
+            KP_ENTER: 'submit',
+            ESCAPE: 'cancel',
+            BACKSPACE: 'backDelete',
+            DELETE: 'delete',
+            LEFT: 'backward',
+            RIGHT: 'forward',
+            UP: 'historyPrevious',
+            DOWN: 'historyNext',
+            HOME: 'startOfInput',
+            END: 'endOfInput',
+            TAB: 'autoComplete',
+            CTRL_R: 'autoCompleteUsingHistory',
+            CTRL_LEFT: 'previousWord',
+            CTRL_RIGHT: 'nextWord',
+            ALT_D: 'deleteNextWord',
+            CTRL_W: 'deletePreviousWord',
+            CTRL_U: 'deleteAllBefore',
+            CTRL_K: 'deleteAllAfter',
+            ALT_BACKSPACE: 'deletePreviousWord',
+        },
         // width: term.width - (opts?.prompt?.length ?? 0) - 1 - 2,
     }).promise
 }
