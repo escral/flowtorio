@@ -27,3 +27,4 @@ output
 *.sln
 *.sw?
 tsconfig.vitest-temp.json
+*.env

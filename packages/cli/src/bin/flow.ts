@@ -4,7 +4,7 @@ import tk from 'terminal-kit'
 import { InputMode } from '~/app/useInputMode'
 import { watch } from '@vue/reactivity'
 
-const { run, logger, onRender, render, input } = useApp({
+const { run, exit, logger, onRender, render, input } = useApp({
     logger: ({
         logs: [],
         log(...args: any[]) {
