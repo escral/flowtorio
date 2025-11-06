@@ -1,12 +1,15 @@
 import { loadConfig } from 'c12'
+import { z } from 'zod'
 
-export interface FlowConfig {
-    jira: {
-        host: string
-        email: string
-        apiToken: string
-    }
-}
+export const FlowConfigSchema = z.object({
+    jira: z.object({
+        host: z.string().min(1, 'JIRA_HOST is required'),
+        email: z.string().min(1, 'JIRA_EMAIL is required'),
+        apiToken: z.string().min(1, 'JIRA_TOKEN is required'),
+    }),
+})
+
+export type FlowConfig = z.infer<typeof FlowConfigSchema>
 
 /**
  * Load configuration from environment variables or config file
@@ -24,14 +27,7 @@ export async function loadFlowConfig(): Promise<FlowConfig> {
         },
     })
 
-    // Validate required config
-    if (!config.jira?.host || !config.jira?.email || !config.jira?.apiToken) {
-        throw new Error(
-            'Missing Jira configuration. Please set JIRA_HOST, JIRA_EMAIL, and JIRA_TOKEN environment variables or create a .flowrc file.',
-        )
-    }
-
-    return config as FlowConfig
+    return FlowConfigSchema.parse(config)
 }
 
 /**
@@ -41,14 +37,7 @@ let cachedConfig: FlowConfig | null = null
 
 export function getConfig(): FlowConfig {
     if (!cachedConfig) {
-        // Fallback to env variables if not loaded
-        cachedConfig = {
-            jira: {
-                host: process.env.JIRA_HOST || '',
-                email: process.env.JIRA_EMAIL || '',
-                apiToken: process.env.JIRA_TOKEN || '',
-            },
-        }
+        throw new Error('Configuration not loaded. Please load the config before accessing it.')
     }
 
     return cachedConfig

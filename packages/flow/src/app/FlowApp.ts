@@ -10,7 +10,7 @@ import {
     StatusBarRenderer,
     type StatusBarData,
 } from '@flowtorio/tui-terminal-kit'
-import { useCommands, defineCommand, useLogger, useNotification } from '@flowtorio/cli'
+import { useCommands, defineCommand, useLogger, useNotifications } from '@flowtorio/cli'
 import { useJiraIssues, DEFAULT_JQL } from '../composables/useJiraIssues'
 import { JiraIssuesRenderer } from '../renderers/JiraIssuesRenderer'
 import { FlowHeaderRenderer } from '../renderers/FlowHeaderRenderer'
@@ -28,7 +28,7 @@ export function createFlowApp() {
     } = useInputMode()
     const commands = useCommands()
     const logger = useLogger()
-    const notifications = useNotification()
+    const notifications = useNotifications()
 
     // Jira data
     const jiraIssues = useJiraIssues({

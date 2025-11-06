@@ -7,8 +7,8 @@ import { createFlowApp } from './app/FlowApp'
 const main = defineCommand({
     meta: {
         name: 'flow',
-        version: '0.0.0',
-        description: 'Flowtorio - Terminal control center for developer tools',
+        version: '0.0.0', // @todo Replace with dynamic version from package.json
+        description: 'Flowtorio - Terminal control center for developer tools', // @todo Get from package.json
     },
     args: {
         version: {
@@ -19,7 +19,7 @@ const main = defineCommand({
     },
     async run({ args }) {
         if (args.version) {
-            console.log('flow v0.0.0')
+            console.log('flow v0.0.0') // @todo Replace with dynamic version from package.json
 
             return
         }
@@ -40,5 +40,6 @@ const main = defineCommand({
 })
 
 // Run the CLI
+// noinspection JSIgnoredPromiseFromCall
 runMain(main)
 

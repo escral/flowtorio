@@ -84,6 +84,9 @@ importers:
       jira.js:
         specifier: ^5.2.2
         version: 5.2.2
+      zod:
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@escral/lint':
         specifier: ^2.0.10
@@ -1995,6 +1998,9 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
+  zod@4.1.12:
+    resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
+
 snapshots:
 
   '@babel/generator@7.28.5':
@@ -3779,3 +3785,5 @@ snapshots:
       strip-indent: 2.0.0
 
   zod@3.25.76: {}
+
+  zod@4.1.12: {}

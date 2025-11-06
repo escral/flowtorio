@@ -18,7 +18,7 @@ export interface UseNotificationReturn {
 /**
  * Notification system with auto-dismiss
  */
-export function useNotification(): UseNotificationReturn {
+export function useNotifications(): UseNotificationReturn {
     const notifications = ref<Notification[]>([])
 
     const notify = (message: string, type: Notification['type'], timeout = 3000) => {
