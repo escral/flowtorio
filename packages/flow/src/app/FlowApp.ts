@@ -12,8 +12,7 @@ import {
     useTerminal,
 } from '@flowtorio/tui-terminal-kit'
 import { defineCommand, useCommands, useLogger, useNotifications } from '@flowtorio/cli'
-import { JiraIssuesRenderer } from '../renderers/JiraIssuesRenderer'
-import { FlowHeaderRenderer } from '../renderers/FlowHeaderRenderer'
+import { JiraIssuesRenderer, FlowHeaderRenderer } from '~/renderers'
 
 /**
  * Main Flow application
@@ -27,7 +26,10 @@ export function createFlowApp() {
  */
 function setupFlowApp(app: AppContext) {
     const layout = useLayout()
-    const { mode, setMode } = useInputMode()
+    const {
+        mode,
+        setMode,
+    } = useInputMode()
     const commands = useCommands()
     const logger = useLogger()
     const notifications = useNotifications()
@@ -85,9 +87,9 @@ function setupFlowApp(app: AppContext) {
     const statusBarRenderer = new StatusBarRenderer()
 
     // Setup blocks with renderers
-    const headerBlockRenderer = useBlock(headerBlock, headerRenderer)
-    const contentBlockRenderer = useBlock(contentBlock, issuesRenderer)
-    const footerBlockRenderer = useBlock(footerBlock, statusBarRenderer)
+    const header = useBlock(headerBlock, headerRenderer)
+    const content = useBlock(contentBlock, issuesRenderer)
+    const footer = useBlock(footerBlock, statusBarRenderer)
 
     // Jira data
     const jiraIssues = {
@@ -101,21 +103,18 @@ function setupFlowApp(app: AppContext) {
 
     // Register render callbacks
     app.onRender(() => {
-        // Render header
-        headerBlockRenderer.render({
+        header.render({
             title: 'Flowtorio',
             subtitle: 'Flow Control Center',
             context: `Issues: ${jiraIssues.data.value?.length || 0}`,
         })
 
-        // Render content (Jira issues)
-        contentBlockRenderer.render({
+        content.render({
             issues: jiraIssues.data.value || [],
             loading: jiraIssues.loading.value,
             showMarkers: mode.value === InputMode.Select,
         })
 
-        // Render footer (status bar)
         const latestLog = logger.latest()
         const latestNotification = notifications.notifications.value[notifications.notifications.value.length - 1]
 
@@ -128,7 +127,7 @@ function setupFlowApp(app: AppContext) {
             statusData.notification = latestNotification
         }
 
-        footerBlockRenderer.render(statusData)
+        footer.render(statusData)
     })
 
     // Setup keybindings for Normal mode
