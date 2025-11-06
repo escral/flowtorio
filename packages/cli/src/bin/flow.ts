@@ -80,6 +80,7 @@ onRender((term) => {
 })
 
 onRender((term) => {
+    // @ts-ignore
     const lastLog = logger?.logs[logger.logs.length - 1]
 
     if (lastLog) {
