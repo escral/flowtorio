@@ -20,7 +20,7 @@ const MARKER_KEYS = 'asdfghjklqwertyuiopzxcvbnm'.split('')
  * Renderer for selectable lists with markers (for Select mode)
  */
 export class SelectableListRenderer implements Renderer<SelectableListData> {
-    render(terminal: Terminal, data: SelectableListData, dimensions: BlockDimensions): void {
+    public render(terminal: Terminal, data: SelectableListData, dimensions: BlockDimensions): void {
         const {
             contentX,
             contentY,
@@ -66,7 +66,7 @@ export class SelectableListRenderer implements Renderer<SelectableListData> {
         terminal.styleReset()
     }
 
-    clear(terminal: Terminal, dimensions: BlockDimensions): void {
+    public clear(terminal: Terminal, dimensions: BlockDimensions): void {
         const {
             contentX,
             contentY,
@@ -82,14 +82,14 @@ export class SelectableListRenderer implements Renderer<SelectableListData> {
     /**
      * Get marker key for an item index
      */
-    static getMarkerKey(index: number): string {
+    public static getMarkerKey(index: number): string {
         return MARKER_KEYS[index % MARKER_KEYS.length]
     }
 
     /**
      * Get item index for a marker key
      */
-    static getIndexForMarker(key: string): number {
+    public static getIndexForMarker(key: string): number {
         return MARKER_KEYS.indexOf(key.toLowerCase())
     }
 }

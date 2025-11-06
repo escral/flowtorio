@@ -11,7 +11,7 @@ export interface FlowHeaderData {
  * Renderer for Flow app header
  */
 export class FlowHeaderRenderer implements Renderer<FlowHeaderData> {
-    render(terminal: Terminal, data: FlowHeaderData, dimensions: BlockDimensions): void {
+    public render(terminal: Terminal, data: FlowHeaderData, dimensions: BlockDimensions): void {
         const {
             contentX,
             contentY,
@@ -44,7 +44,7 @@ export class FlowHeaderRenderer implements Renderer<FlowHeaderData> {
         terminal.styleReset()
     }
 
-    clear(terminal: Terminal, dimensions: BlockDimensions): void {
+    public clear(terminal: Terminal, dimensions: BlockDimensions): void {
         terminal.moveTo(dimensions.contentX, dimensions.contentY)
         terminal.eraseLine()
     }

@@ -38,17 +38,17 @@ export interface LayoutBlockConfig {
  * LayoutBlock class for managing individual UI blocks
  */
 export class LayoutBlock {
-    id: string
-    x: number
-    y: number
-    width: number
-    height: number
-    hasBorder: boolean
-    title?: string
-    zIndex: number
-    isDirty: boolean
+    public id: string
+    public x: number
+    public y: number
+    public width: number
+    public height: number
+    public hasBorder: boolean
+    public title?: string
+    public zIndex: number
+    public isDirty: boolean
 
-    constructor(config: LayoutBlockConfig) {
+    public constructor(config: LayoutBlockConfig) {
         this.id = config.id
         this.x = config.x
         this.y = config.y
@@ -63,7 +63,7 @@ export class LayoutBlock {
     /**
      * Get dimensions including content area after borders
      */
-    getDimensions(): BlockDimensions {
+    public getDimensions(): BlockDimensions {
         const borderSize = this.hasBorder ? 1 : 0
         const borderPadding = borderSize * 2
 
@@ -82,21 +82,21 @@ export class LayoutBlock {
     /**
      * Mark this block as needing re-render
      */
-    markDirty(): void {
+    public markDirty(): void {
         this.isDirty = true
     }
 
     /**
      * Mark this block as rendered
      */
-    markClean(): void {
+    public markClean(): void {
         this.isDirty = false
     }
 
     /**
      * Update block dimensions
      */
-    setDimensions(x: number, y: number, width: number, height: number): void {
+    public setDimensions(x: number, y: number, width: number, height: number): void {
         if (this.x !== x || this.y !== y || this.width !== width || this.height !== height) {
             this.x = x
             this.y = y

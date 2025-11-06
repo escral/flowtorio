@@ -13,7 +13,7 @@ export interface InputData {
  * Renderer for input fields
  */
 export class InputRenderer implements Renderer<InputData> {
-    render(terminal: Terminal, data: InputData, dimensions: BlockDimensions): void {
+    public render(terminal: Terminal, data: InputData, dimensions: BlockDimensions): void {
         const {
             contentX,
             contentY,
@@ -51,7 +51,7 @@ export class InputRenderer implements Renderer<InputData> {
         terminal.styleReset()
     }
 
-    clear(terminal: Terminal, dimensions: BlockDimensions): void {
+    public clear(terminal: Terminal, dimensions: BlockDimensions): void {
         terminal.moveTo(dimensions.contentX, dimensions.contentY)
         terminal.eraseLine()
         terminal.hideCursor(true)

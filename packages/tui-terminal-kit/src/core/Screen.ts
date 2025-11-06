@@ -9,7 +9,7 @@ export class Screen {
     private _width: Ref<number>
     private _height: Ref<number>
 
-    constructor(terminal: Terminal) {
+    public constructor(terminal: Terminal) {
         this.terminal = terminal
         const dims = terminal.getDimensions()
         this._width = ref(dims.width)
@@ -30,21 +30,21 @@ export class Screen {
     /**
      * Get reactive width
      */
-    get width(): Ref<number> {
+    public get width(): Ref<number> {
         return this._width
     }
 
     /**
      * Get reactive height
      */
-    get height(): Ref<number> {
+    public get height(): Ref<number> {
         return this._height
     }
 
     /**
      * Clear the screen
      */
-    clear(): void {
+    public clear(): void {
         this.terminal.clear()
     }
 }

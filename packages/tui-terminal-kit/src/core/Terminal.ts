@@ -8,14 +8,14 @@ export class Terminal {
     private term: TerminalType
     private initialized = false
 
-    constructor() {
+    public constructor() {
         this.term = tk.terminal
     }
 
     /**
      * Initialize terminal for TUI mode
      */
-    initialize(): void {
+    public initialize(): void {
         if (this.initialized) {
             return
         }
@@ -29,7 +29,7 @@ export class Terminal {
     /**
      * Cleanup and restore terminal
      */
-    dispose(): void {
+    public dispose(): void {
         if (!this.initialized) {
             return
         }
@@ -44,14 +44,14 @@ export class Terminal {
     /**
      * Get the raw terminal instance
      */
-    getInstance(): TerminalType {
+    public getInstance(): TerminalType {
         return this.term
     }
 
     /**
      * Get terminal dimensions
      */
-    getDimensions(): {
+    public getDimensions(): {
         width: number;
         height: number
         } {
@@ -64,7 +64,7 @@ export class Terminal {
     /**
      * Clear the entire screen
      */
-    clear(): void {
+    public clear(): void {
         this.term.clear()
     }
 }

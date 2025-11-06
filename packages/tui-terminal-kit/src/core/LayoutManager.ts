@@ -7,21 +7,21 @@ import { LayoutBlock, type LayoutBlockConfig } from '../types/LayoutBlock'
 export class LayoutManager {
     private _blocks: Ref<LayoutBlock[]>
 
-    constructor() {
+    public constructor() {
         this._blocks = ref([])
     }
 
     /**
      * Get all blocks (reactive)
      */
-    get blocks(): Ref<LayoutBlock[]> {
+    public get blocks(): Ref<LayoutBlock[]> {
         return this._blocks
     }
 
     /**
      * Add a new block to the layout
      */
-    addBlock(config: LayoutBlockConfig): LayoutBlock {
+    public addBlock(config: LayoutBlockConfig): LayoutBlock {
         const block = new LayoutBlock(config)
         this._blocks.value.push(block)
 
@@ -31,7 +31,7 @@ export class LayoutManager {
     /**
      * Remove a block by id
      */
-    removeBlock(id: string): void {
+    public removeBlock(id: string): void {
         const index = this._blocks.value.findIndex(b => b.id === id)
 
         if (index !== -1) {
@@ -42,14 +42,14 @@ export class LayoutManager {
     /**
      * Get a block by id
      */
-    getBlock(id: string): LayoutBlock | undefined {
+    public getBlock(id: string): LayoutBlock | undefined {
         return this._blocks.value.find(b => b.id === id)
     }
 
     /**
      * Mark all blocks as dirty (e.g., on terminal resize)
      */
-    markAllDirty(): void {
+    public markAllDirty(): void {
         for (const block of this._blocks.value) {
             block.markDirty()
         }
@@ -58,14 +58,14 @@ export class LayoutManager {
     /**
      * Get blocks sorted by zIndex
      */
-    getSortedBlocks(): LayoutBlock[] {
+    public getSortedBlocks(): LayoutBlock[] {
         return [...this._blocks.value].sort((a, b) => a.zIndex - b.zIndex)
     }
 
     /**
      * Clear all blocks
      */
-    clear(): void {
+    public clear(): void {
         this._blocks.value = []
     }
 }

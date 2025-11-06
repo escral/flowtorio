@@ -15,7 +15,7 @@ const DEFAULT_SPINNER = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧',
  * Renderer for loading spinners
  */
 export class LoaderRenderer implements Renderer<LoaderData> {
-    render(terminal: Terminal, data: LoaderData, dimensions: BlockDimensions): void {
+    public render(terminal: Terminal, data: LoaderData, dimensions: BlockDimensions): void {
         const {
             contentX,
             contentY,
@@ -44,7 +44,7 @@ export class LoaderRenderer implements Renderer<LoaderData> {
         terminal.styleReset()
     }
 
-    clear(terminal: Terminal, dimensions: BlockDimensions): void {
+    public clear(terminal: Terminal, dimensions: BlockDimensions): void {
         terminal.moveTo(dimensions.contentX, dimensions.contentY)
         terminal.eraseLine()
     }

@@ -18,7 +18,7 @@ export interface StatusBarData {
  * Renderer for status bar with mode indicator and notifications
  */
 export class StatusBarRenderer implements Renderer<StatusBarData> {
-    render(terminal: Terminal, data: StatusBarData, dimensions: BlockDimensions): void {
+    public render(terminal: Terminal, data: StatusBarData, dimensions: BlockDimensions): void {
         const {
             contentX,
             contentY,
@@ -104,7 +104,7 @@ export class StatusBarRenderer implements Renderer<StatusBarData> {
         }
     }
 
-    clear(terminal: Terminal, dimensions: BlockDimensions): void {
+    public clear(terminal: Terminal, dimensions: BlockDimensions): void {
         terminal.moveTo(dimensions.contentX, dimensions.contentY)
         terminal.eraseLine()
     }

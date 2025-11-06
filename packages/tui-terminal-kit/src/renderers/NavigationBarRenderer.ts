@@ -16,7 +16,7 @@ export interface NavigationBarData {
  * Renderer for navigation breadcrumbs
  */
 export class NavigationBarRenderer implements Renderer<NavigationBarData> {
-    render(terminal: Terminal, data: NavigationBarData, dimensions: BlockDimensions): void {
+    public render(terminal: Terminal, data: NavigationBarData, dimensions: BlockDimensions): void {
         const {
             contentX,
             contentY,
@@ -61,7 +61,7 @@ export class NavigationBarRenderer implements Renderer<NavigationBarData> {
         terminal.styleReset()
     }
 
-    clear(terminal: Terminal, dimensions: BlockDimensions): void {
+    public clear(terminal: Terminal, dimensions: BlockDimensions): void {
         terminal.moveTo(dimensions.contentX, dimensions.contentY)
         terminal.eraseLine()
     }

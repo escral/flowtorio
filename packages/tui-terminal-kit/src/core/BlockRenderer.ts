@@ -8,7 +8,7 @@ export class BlockRenderer {
     /**
      * Render border and title for a block
      */
-    renderBorder(terminal: TerminalType, block: LayoutBlock): void {
+    public renderBorder(terminal: TerminalType, block: LayoutBlock): void {
         if (!block.hasBorder) {
             return
         }
@@ -20,7 +20,7 @@ export class BlockRenderer {
     /**
      * Clear a block area
      */
-    clearBlock(terminal: TerminalType, dimensions: BlockDimensions): void {
+    public clearBlock(terminal: TerminalType, dimensions: BlockDimensions): void {
         // Clear content area
         for (let y = dimensions.contentY; y < dimensions.contentY + dimensions.contentHeight; y++) {
             terminal.moveTo(dimensions.contentX, y)

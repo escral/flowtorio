@@ -12,7 +12,7 @@ export interface JiraIssuesData {
  * Renderer for Jira issues in table format
  */
 export class JiraIssuesRenderer implements Renderer<JiraIssuesData> {
-    render(terminal: Terminal, data: JiraIssuesData, dimensions: BlockDimensions): void {
+    public render(terminal: Terminal, data: JiraIssuesData, dimensions: BlockDimensions): void {
         const {
             contentX,
             contentY,
@@ -82,7 +82,7 @@ export class JiraIssuesRenderer implements Renderer<JiraIssuesData> {
         terminal.styleReset()
     }
 
-    clear(terminal: Terminal, dimensions: BlockDimensions): void {
+    public clear(terminal: Terminal, dimensions: BlockDimensions): void {
         for (let y = dimensions.contentY; y < dimensions.contentY + dimensions.contentHeight; y++) {
             terminal.moveTo(dimensions.contentX, y)
             terminal.eraseLine()
