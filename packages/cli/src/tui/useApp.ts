@@ -40,8 +40,6 @@ export function useApp(options: {
         onRenderCallbacks.push(fn)
     }
 
-    useRender(render)
-
     //
 
     async function loop() {
@@ -67,6 +65,8 @@ export function useApp(options: {
                 input.changeInputMode(InputMode.Command)
             } else if (eventName === 'i') {
                 input.changeInputMode(InputMode.Insert)
+            } else if (eventName === 'f') {
+                input.changeInputMode(InputMode.Select)
             }
         } else {
             if (eventName === 'ESCAPE') {
@@ -77,16 +77,11 @@ export function useApp(options: {
         }
     })
 
-    onRender((term) => {
-        term.moveTo(5, 5)
-        term.eraseLine()
-        term('Input Mode: ')
-        term.bold.cyan(InputMode[input.mode.value])
-    })
-
     watch(input.mode, render, { immediate: true })
 
     //
+
+    useRender(render)
 
     return {
         render,

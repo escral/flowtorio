@@ -59,22 +59,24 @@ onRender((term) => {
     }
 
     let y = 5
-    const table: string[][] = [['Key', 'Summary', 'Status', 'Updated']]
+    const table: string[][] = [['Key', 'Summary', 'Status']]
     for (const issue of issues) {
         if (y >= H - 2) {
             break
         }
 
-        const summary = issue.fields.summary || 'No Summary'
-        const status = issue.fields.status?.name || 'Unknown Status'
-        const updated = issue.fields.updated || 'Unknown Updated'
-
-        table.push([issue.key, summary, status, updated])
+        const parentIssue = issue.fields.parent
+        table.push([parentIssue.key, parentIssue.fields.summary, parentIssue.fields.status?.name])
+        table.push([issue.key, '    ' + issue.fields.summary, issue.fields.status?.name])
+        table.push(['', '', ''])
         y++
     }
 
     term.moveTo(1, y)
-    term.table(table)
+    term.table(table, {
+        firstRowTextAttr: { bold: true },
+        hasBorder: false,
+    })
 })
 
 onRender((term) => {
@@ -98,8 +100,13 @@ onRender((term) => {
     } else if (input.mode.value === InputMode.Insert) {
         term.moveTo(1, H - 1)
         term.bold.bgBlue(' INSERT ')
+    } else if (input.mode.value === InputMode.Select) {
+        term.moveTo(1, H - 1)
+        term.bold.bgCyan(' SELECT ')
     }
 })
+
+render()
 
 const term = tk.terminal
 
@@ -174,7 +181,7 @@ async function fetchIssues() {
         'and sprint in openSprints()\n' +
         'ORDER BY project, parent, updated DESC',
             maxResults: 10,
-            fields: ['summary', 'status', 'parent_id', 'updated'],
+            fields: ['summary', 'status', 'parent'],
             failFast: true,
         })
 

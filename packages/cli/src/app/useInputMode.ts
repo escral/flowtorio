@@ -4,6 +4,7 @@ export enum InputMode {
     Normal,
     Insert,
     Command,
+    Select,
 }
 
 export function useInputMode(keybindings?: Record<InputMode, string[]>) {
