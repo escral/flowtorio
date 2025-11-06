@@ -3,18 +3,38 @@ import { useTerminal, disposeTerminal } from './useTerminal'
 import { setupGlobalKeyListener } from './useKeybindings'
 import { useInputMode } from './useInputMode'
 import { InputMode } from '../types/InputMode'
-import * as process from "node:process";
+import * as process from 'node:process'
+
+/**
+ * CLI Application interface
+ */
+export interface App {
+    run: () => void | Promise<void>
+    exit: () => void
+}
 
 export interface AppOptions {
     onExit?: () => void
+}
+
+export interface AppContext {
+    run: () => void
+    exit: () => void
+    cleanup: () => void
+    render: () => void
+    onRender: (callback: RenderCallback) => () => void
 }
 
 type RenderCallback = () => void
 
 /**
  * Main application lifecycle composable
+ * Takes a setup function that configures the app, wrapped in error handling
  */
-export function useApp(options: AppOptions = {}) {
+export function useApp(
+    setupFn: (app: AppContext) => void | Promise<void>,
+    options: AppOptions = {},
+): App {
     const {
         terminal,
         width,
@@ -72,6 +92,7 @@ export function useApp(options: AppOptions = {}) {
         // Setup key listener
         cleanupKeyListener = setupGlobalKeyListener()
 
+        // @todo Extract mode switching to its own composable
         // Setup mode switching keys (can be overridden by user)
         terminal.on('key', (eventName: string) => {
             if (mode.value === InputMode.Normal) {
@@ -115,12 +136,29 @@ export function useApp(options: AppOptions = {}) {
         process.exit(0)
     }
 
-    return {
+    // Create app context to pass to setup function
+    const appContext: AppContext = {
         run,
         exit,
         cleanup,
         render,
         onRender,
+    }
+
+    // Wrap run in try-catch for graceful error handling
+    const wrappedRun = async () => {
+        try {
+            await setupFn(appContext)
+            run()
+        } catch (error) {
+            cleanup()
+            throw error
+        }
+    }
+
+    return {
+        run: wrappedRun,
+        exit,
     }
 }
 

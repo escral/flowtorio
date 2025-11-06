@@ -1,17 +1,17 @@
-import { watch } from '@vue/reactivity'
+import { ref, watch } from '@vue/reactivity'
 import {
+    type AppContext,
+    InputMode,
+    type StatusBarData,
+    StatusBarRenderer,
     useApp,
-    useLayout,
     useBlock,
     useInputMode,
     useKeybindings,
+    useLayout,
     useTerminal,
-    InputMode,
-    StatusBarRenderer,
-    type StatusBarData,
 } from '@flowtorio/tui-terminal-kit'
-import { useCommands, defineCommand, useLogger, useNotifications } from '@flowtorio/cli'
-import { useJiraIssues, DEFAULT_JQL } from '../composables/useJiraIssues'
+import { defineCommand, useCommands, useLogger, useNotifications } from '@flowtorio/cli'
 import { JiraIssuesRenderer } from '../renderers/JiraIssuesRenderer'
 import { FlowHeaderRenderer } from '../renderers/FlowHeaderRenderer'
 
@@ -19,13 +19,15 @@ import { FlowHeaderRenderer } from '../renderers/FlowHeaderRenderer'
  * Main Flow application
  */
 export function createFlowApp() {
-    // Core composables
-    const app = useApp()
+    return useApp(setupFlowApp)
+}
+
+/**
+ * Setup Flow application logic
+ */
+function setupFlowApp(app: AppContext) {
     const layout = useLayout()
-    const {
-        mode,
-        setMode,
-    } = useInputMode()
+    const { mode, setMode } = useInputMode()
     const commands = useCommands()
     const logger = useLogger()
     const notifications = useNotifications()
@@ -43,7 +45,7 @@ export function createFlowApp() {
             y: 1,
             width: terminal.width,
             height: 3,
-            hasBorder: false,
+            hasBorder: true,
         })
 
         const contentBlock = layout.addBlock({
@@ -52,7 +54,7 @@ export function createFlowApp() {
             y: 4,
             width: terminal.width,
             height: terminal.height - 6,
-            hasBorder: false,
+            hasBorder: true,
         })
 
         const footerBlock = layout.addBlock({
@@ -88,10 +90,14 @@ export function createFlowApp() {
     const footerBlockRenderer = useBlock(footerBlock, statusBarRenderer)
 
     // Jira data
-    const jiraIssues = useJiraIssues({
-        jql: DEFAULT_JQL,
-        maxResults: 20,
-    })
+    const jiraIssues = {
+        data: ref([]),
+        loading: ref(false),
+        error: ref<Error | null>(null),
+        async refresh() {
+            await new Promise((resolve) => setTimeout(resolve, 500)) // Simulate delay
+        },
+    }
 
     // Register render callbacks
     app.onRender(() => {
@@ -224,14 +230,4 @@ export function createFlowApp() {
     watch([jiraIssues.data, jiraIssues.loading], () => {
         app.render()
     })
-
-    return {
-        run: () => {
-            app.run()
-        },
-        exit: () => {
-            app.exit()
-        },
-    }
 }
-

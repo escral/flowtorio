@@ -9,11 +9,11 @@
     ],
     "author": "Alexander Topalo <topaloalexander@gmail.com>",
     "scripts": {
-        "build": "pnpm -r -F ./packages/* run build",
+        "build": "pnpm -r -F packages/* run build",
         "dev": "pnpm -F @flowtorio/cli dev",
-        "test": "pnpm -r -F ./packages/* run test",
+        "test": "pnpm -r -F packages/* run test",
         "lint": "pnpm eslint --ext .ts,.vue,.js .",
-        "release": "pnpm -r -F ./packages/* run release",
+        "release": "pnpm -r -F packages/* run release",
         "flow": "pnpm -C packages/cli run flow"
     },
     "devDependencies": {
@@ -28,5 +28,5 @@
     "engines": {
         "node": ">=18.0"
     },
-    "packageManager": "pnpm@10.19.0"
+    "packageManager": "pnpm@10.20.0"
 }
