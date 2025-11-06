@@ -1,9 +1,9 @@
 import { watch } from '@vue/reactivity'
 import { useTerminal, disposeTerminal } from './useTerminal'
-import { useLayout } from './useLayout'
 import { setupGlobalKeyListener } from './useKeybindings'
 import { useInputMode } from './useInputMode'
 import { InputMode } from '../types/InputMode'
+import * as process from "node:process";
 
 export interface AppOptions {
     onExit?: () => void
@@ -14,18 +14,13 @@ type RenderCallback = () => void
 /**
  * Main application lifecycle composable
  */
-export function useApp(options: AppOptions = {}): {
-    run: () => void
-    exit: () => void
-    render: () => void
-    onRender: (callback: RenderCallback) => () => void
-} {
+export function useApp(options: AppOptions = {}) {
     const {
         terminal,
         width,
         height,
     } = useTerminal()
-    const { blocks } = useLayout()
+
     const {
         mode,
         setMode,
@@ -100,10 +95,7 @@ export function useApp(options: AppOptions = {}): {
         render()
     }
 
-    /**
-     * Exit the application
-     */
-    const exit = () => {
+    const cleanup = () => {
         if (cleanupKeyListener) {
             cleanupKeyListener()
         }
@@ -113,12 +105,20 @@ export function useApp(options: AppOptions = {}): {
         }
 
         disposeTerminal()
+    }
+
+    /**
+     * Exit the application
+     */
+    const exit = () => {
+        cleanup()
         process.exit(0)
     }
 
     return {
         run,
         exit,
+        cleanup,
         render,
         onRender,
     }

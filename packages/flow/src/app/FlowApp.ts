@@ -30,12 +30,6 @@ export function createFlowApp() {
     const logger = useLogger()
     const notifications = useNotifications()
 
-    // Jira data
-    const jiraIssues = useJiraIssues({
-        jql: DEFAULT_JQL,
-        maxResults: 20,
-    })
-
     // Get terminal from composable
     const { terminal } = useTerminal()
 
@@ -92,6 +86,12 @@ export function createFlowApp() {
     const headerBlockRenderer = useBlock(headerBlock, headerRenderer)
     const contentBlockRenderer = useBlock(contentBlock, issuesRenderer)
     const footerBlockRenderer = useBlock(footerBlock, statusBarRenderer)
+
+    // Jira data
+    const jiraIssues = useJiraIssues({
+        jql: DEFAULT_JQL,
+        maxResults: 20,
+    })
 
     // Register render callbacks
     app.onRender(() => {

@@ -33,7 +33,7 @@ const main = defineCommand({
             const app = createFlowApp()
             app.run()
         } catch (error) {
-            console.error('Error:', error instanceof Error ? error.message : String(error))
+            console.error(error)
             process.exit(1)
         }
     },
