@@ -1,0 +1,5 @@
+# Bun configuration for development
+# This configures Bun to use development mode for module resolution
+# When NODE_ENV is not set or is "development", Bun will prefer source TypeScript files
+
+

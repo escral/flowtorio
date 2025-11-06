@@ -1,4 +1,8 @@
 #!/bin/bash
 
-exec bun ./packages/flow/src/index.ts
+# Set NODE_ENV to development and tell Bun to use development condition
+# This makes Bun resolve TypeScript source files instead of built dist files
+export NODE_ENV=development
+
+exec bun --conditions=development ./packages/flow/src/index.ts
 
