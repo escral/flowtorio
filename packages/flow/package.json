@@ -1,50 +1,50 @@
 {
-  "name": "@flowtorio/flow",
-  "version": "0.0.0",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/escral/flowtorio.git",
-    "directory": "packages/flow"
-  },
-  "bin": {
-    "flow": "./dist/index.mjs"
-  },
-  "license": "MIT",
-  "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": "./dist/index.js",
-    "./package.json": "./package.json"
-  },
-  "author": "Alexander Topalo <topaloalexander@gmail.com>",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsdown",
-    "dev": "tsdown --watch",
-    "typecheck": "tsc --noEmit",
-    "flow": "bun ./src/index.ts"
-  },
-  "dependencies": {
-    "@flowtorio/cli": "workspace:*",
-    "@flowtorio/tui-terminal-kit": "workspace:*",
-    "@vue/reactivity": "^3.5.22",
-    "c12": "^3.3.1",
-    "citty": "^0.1.6",
-    "consola": "^3.4.2",
-    "jira.js": "^5.2.2"
-  },
-  "devDependencies": {
-    "@escral/lint": "^2.0.10",
-    "@escral/tsconfig": "^0.2.1",
-    "@types/terminal-kit": "^2.5.7",
-    "tsdown": "^0.15.9"
-  },
-  "engines": {
-    "node": ">=18.0"
-  }
+    "name": "@flowtorio/flow",
+    "version": "0.0.0",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/escral/flowtorio.git",
+        "directory": "packages/flow"
+    },
+    "bin": {
+        "flow": "./dist/index.mjs"
+    },
+    "license": "MIT",
+    "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": "./dist/index.js",
+        "./package.json": "./package.json"
+    },
+    "author": "Alexander Topalo <topaloalexander@gmail.com>",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsdown",
+        "dev": "tsdown --watch",
+        "typecheck": "tsc --noEmit",
+        "flow": "bun ./src/index.ts"
+    },
+    "dependencies": {
+        "@flowtorio/cli": "workspace:*",
+        "@flowtorio/tui-terminal-kit": "workspace:*",
+        "@vue/reactivity": "^3.5.22",
+        "c12": "^3.3.1",
+        "citty": "^0.1.6",
+        "consola": "^3.4.2",
+        "jira.js": "^5.2.2"
+    },
+    "devDependencies": {
+        "@escral/lint": "^2.0.10",
+        "@escral/tsconfig": "^0.2.1",
+        "@types/terminal-kit": "^2.5.7",
+        "tsdown": "^0.15.9"
+    },
+    "engines": {
+        "node": ">=18.0"
+    }
 }
 
