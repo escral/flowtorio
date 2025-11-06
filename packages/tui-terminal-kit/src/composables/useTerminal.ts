@@ -11,10 +11,10 @@ let screenInstance: Screen | null = null
  * Access terminal instance and dimensions reactively
  */
 export function useTerminal(): {
-  width: Ref<number>
-  height: Ref<number>
-  terminal: TerminalType
-  } {
+    width: Ref<number>
+    height: Ref<number>
+    terminal: TerminalType
+    } {
     if (!terminalInstance) {
         terminalInstance = new Terminal()
         terminalInstance.initialize()
@@ -35,9 +35,9 @@ export function useTerminal(): {
  * Get the raw terminal and screen instances
  */
 export function getTerminalCore(): {
-  terminal: Terminal
-  screen: Screen
-  } {
+    terminal: Terminal
+    screen: Screen
+    } {
     if (!terminalInstance) {
         terminalInstance = new Terminal()
         terminalInstance.initialize()

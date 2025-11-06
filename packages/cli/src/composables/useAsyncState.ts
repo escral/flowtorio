@@ -1,10 +1,10 @@
 import { ref, type Ref } from '@vue/reactivity'
 
 export interface UseAsyncStateReturn<T> {
-  state: Ref<T>
-  loading: Ref<boolean>
-  error: Ref<Error | null>
-  execute: <R>(fn: () => Promise<R>) => Promise<R>
+    state: Ref<T>
+    loading: Ref<boolean>
+    error: Ref<Error | null>
+    execute: <R>(fn: () => Promise<R>) => Promise<R>
 }
 
 /**

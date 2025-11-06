@@ -3,15 +3,15 @@ import type { Renderer } from '../types/Renderer'
 import type { BlockDimensions } from '../types/LayoutBlock'
 
 export interface SelectableItem {
-  id: string
-  label: string
-  marker?: string
-  selected?: boolean
+    id: string
+    label: string
+    marker?: string
+    selected?: boolean
 }
 
 export interface SelectableListData {
-  items: SelectableItem[]
-  showMarkers?: boolean
+    items: SelectableItem[]
+    showMarkers?: boolean
 }
 
 const MARKER_KEYS = 'asdfghjklqwertyuiopzxcvbnm'.split('')
@@ -21,7 +21,12 @@ const MARKER_KEYS = 'asdfghjklqwertyuiopzxcvbnm'.split('')
  */
 export class SelectableListRenderer implements Renderer<SelectableListData> {
     render(terminal: Terminal, data: SelectableListData, dimensions: BlockDimensions): void {
-        const { contentX, contentY, contentWidth, contentHeight } = dimensions
+        const {
+            contentX,
+            contentY,
+            contentWidth,
+            contentHeight,
+        } = dimensions
 
         const maxItems = Math.min(data.items.length, contentHeight)
 
@@ -62,7 +67,11 @@ export class SelectableListRenderer implements Renderer<SelectableListData> {
     }
 
     clear(terminal: Terminal, dimensions: BlockDimensions): void {
-        const { contentX, contentY, contentHeight } = dimensions
+        const {
+            contentX,
+            contentY,
+            contentHeight,
+        } = dimensions
 
         for (let i = 0; i < contentHeight; i++) {
             terminal.moveTo(contentX, contentY + i)
@@ -71,15 +80,15 @@ export class SelectableListRenderer implements Renderer<SelectableListData> {
     }
 
     /**
-   * Get marker key for an item index
-   */
+     * Get marker key for an item index
+     */
     static getMarkerKey(index: number): string {
         return MARKER_KEYS[index % MARKER_KEYS.length]
     }
 
     /**
-   * Get item index for a marker key
-   */
+     * Get item index for a marker key
+     */
     static getIndexForMarker(key: string): number {
         return MARKER_KEYS.indexOf(key.toLowerCase())
     }

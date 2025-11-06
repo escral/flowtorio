@@ -1,18 +1,18 @@
 import { ref, type Ref } from '@vue/reactivity'
 
 export interface Notification {
-  id: string
-  message: string
-  type: 'info' | 'success' | 'error' | 'warning'
-  timestamp: Date
-  timeout?: number
+    id: string
+    message: string
+    type: 'info' | 'success' | 'error' | 'warning'
+    timestamp: Date
+    timeout?: number
 }
 
 export interface UseNotificationReturn {
-  notifications: Ref<Notification[]>
-  notify: (message: string, type: Notification['type'], timeout?: number) => void
-  clear: (id: string) => void
-  clearAll: () => void
+    notifications: Ref<Notification[]>
+    notify: (message: string, type: Notification['type'], timeout?: number) => void
+    clear: (id: string) => void
+    clearAll: () => void
 }
 
 /**

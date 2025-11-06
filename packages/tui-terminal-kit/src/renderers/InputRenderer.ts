@@ -3,10 +3,10 @@ import type { Renderer } from '../types/Renderer'
 import type { BlockDimensions } from '../types/LayoutBlock'
 
 export interface InputData {
-  prompt?: string
-  value: string
-  cursor?: number
-  placeholder?: string
+    prompt?: string
+    value: string
+    cursor?: number
+    placeholder?: string
 }
 
 /**
@@ -14,7 +14,11 @@ export interface InputData {
  */
 export class InputRenderer implements Renderer<InputData> {
     render(terminal: Terminal, data: InputData, dimensions: BlockDimensions): void {
-        const { contentX, contentY, contentWidth } = dimensions
+        const {
+            contentX,
+            contentY,
+            contentWidth,
+        } = dimensions
 
         terminal.moveTo(contentX, contentY)
         terminal.eraseLine()

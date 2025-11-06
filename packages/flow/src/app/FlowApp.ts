@@ -22,21 +22,27 @@ export function createFlowApp() {
     // Core composables
     const app = useApp()
     const layout = useLayout()
-    const { mode, setMode } = useInputMode()
+    const {
+        mode,
+        setMode,
+    } = useInputMode()
     const commands = useCommands()
     const logger = useLogger()
     const notifications = useNotification()
 
     // Jira data
-    const jiraIssues = useJiraIssues({ jql: DEFAULT_JQL, maxResults: 20 })
+    const jiraIssues = useJiraIssues({
+        jql: DEFAULT_JQL,
+        maxResults: 20,
+    })
 
     // Get terminal from composable
     const { terminal } = useTerminal()
-  
+
     // Calculate dimensions (reactive to terminal size)
     const createBlocks = () => {
         layout.blocks.value = [] // Clear existing blocks
-    
+
         const headerBlock = layout.addBlock({
             id: 'header',
             x: 1,
@@ -64,10 +70,18 @@ export function createFlowApp() {
             hasBorder: false,
         })
 
-        return { headerBlock, contentBlock, footerBlock }
+        return {
+            headerBlock,
+            contentBlock,
+            footerBlock,
+        }
     }
 
-    const { headerBlock, contentBlock, footerBlock } = createBlocks()
+    const {
+        headerBlock,
+        contentBlock,
+        footerBlock,
+    } = createBlocks()
 
     // Create renderers
     const headerRenderer = new FlowHeaderRenderer()
@@ -81,7 +95,7 @@ export function createFlowApp() {
 
     // Register render callbacks
     app.onRender(() => {
-    // Render header
+        // Render header
         headerBlockRenderer.render({
             title: 'Flowtorio',
             subtitle: 'Flow Control Center',
@@ -131,7 +145,7 @@ export function createFlowApp() {
 
     // Setup keybindings for Command mode
     useKeybindings(InputMode.Command, {
-    // Command mode input will be handled separately
+        // Command mode input will be handled separately
     })
 
     // Setup keybindings for Select mode

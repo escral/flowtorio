@@ -4,14 +4,14 @@ import type { BlockDimensions } from '../types/LayoutBlock'
 import { InputMode } from '../types/InputMode'
 
 export interface Notification {
-  message: string
-  type: 'info' | 'success' | 'error' | 'warning'
+    message: string
+    type: 'info' | 'success' | 'error' | 'warning'
 }
 
 export interface StatusBarData {
-  mode: InputMode
-  notification?: Notification
-  message?: string
+    mode: InputMode
+    notification?: Notification
+    message?: string
 }
 
 /**
@@ -19,7 +19,11 @@ export interface StatusBarData {
  */
 export class StatusBarRenderer implements Renderer<StatusBarData> {
     render(terminal: Terminal, data: StatusBarData, dimensions: BlockDimensions): void {
-        const { contentX, contentY, contentWidth } = dimensions
+        const {
+            contentX,
+            contentY,
+            contentWidth,
+        } = dimensions
 
         terminal.moveTo(contentX, contentY)
         terminal.eraseLine()
@@ -46,7 +50,7 @@ export class StatusBarRenderer implements Renderer<StatusBarData> {
 
         switch (mode) {
         case InputMode.Normal:
-        // No indicator in normal mode
+            // No indicator in normal mode
             break
         case InputMode.Command:
             terminal.bold.bgGreen.black(' COMMAND ')

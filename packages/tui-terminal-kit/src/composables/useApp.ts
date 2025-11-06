@@ -6,7 +6,7 @@ import { useInputMode } from './useInputMode'
 import { InputMode } from '../types/InputMode'
 
 export interface AppOptions {
-  onExit?: () => void
+    onExit?: () => void
 }
 
 type RenderCallback = () => void
@@ -15,14 +15,21 @@ type RenderCallback = () => void
  * Main application lifecycle composable
  */
 export function useApp(options: AppOptions = {}): {
-  run: () => void
-  exit: () => void
-  render: () => void
-  onRender: (callback: RenderCallback) => () => void
+    run: () => void
+    exit: () => void
+    render: () => void
+    onRender: (callback: RenderCallback) => () => void
 } {
-    const { terminal, width, height } = useTerminal()
+    const {
+        terminal,
+        width,
+        height,
+    } = useTerminal()
     const { blocks } = useLayout()
-    const { mode, setMode } = useInputMode()
+    const {
+        mode,
+        setMode,
+    } = useInputMode()
 
     const renderCallbacks: RenderCallback[] = []
 
@@ -35,8 +42,8 @@ export function useApp(options: AppOptions = {}): {
     })
 
     /**
-   * Register a render callback
-   */
+     * Register a render callback
+     */
     const onRender = (callback: RenderCallback): (() => void) => {
         renderCallbacks.push(callback)
 
@@ -51,8 +58,8 @@ export function useApp(options: AppOptions = {}): {
     }
 
     /**
-   * Render all callbacks
-   */
+     * Render all callbacks
+     */
     const render = () => {
         terminal.clear()
 
@@ -64,10 +71,10 @@ export function useApp(options: AppOptions = {}): {
     }
 
     /**
-   * Run the application
-   */
+     * Run the application
+     */
     const run = () => {
-    // Setup key listener
+        // Setup key listener
         cleanupKeyListener = setupGlobalKeyListener()
 
         // Setup mode switching keys (can be overridden by user)
@@ -94,8 +101,8 @@ export function useApp(options: AppOptions = {}): {
     }
 
     /**
-   * Exit the application
-   */
+     * Exit the application
+     */
     const exit = () => {
         if (cleanupKeyListener) {
             cleanupKeyListener()

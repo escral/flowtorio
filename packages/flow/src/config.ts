@@ -1,11 +1,11 @@
 import { loadConfig } from 'c12'
 
 export interface FlowConfig {
-  jira: {
-    host: string
-    email: string
-    apiToken: string
-  }
+    jira: {
+        host: string
+        email: string
+        apiToken: string
+    }
 }
 
 /**
@@ -41,7 +41,7 @@ let cachedConfig: FlowConfig | null = null
 
 export function getConfig(): FlowConfig {
     if (!cachedConfig) {
-    // Fallback to env variables if not loaded
+        // Fallback to env variables if not loaded
         cachedConfig = {
             jira: {
                 host: process.env.JIRA_HOST || '',

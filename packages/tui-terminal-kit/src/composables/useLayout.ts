@@ -12,17 +12,20 @@ let layoutManagerInstance: LayoutManager | null = null
  * Manage dynamic layout with LayoutBlock instances
  */
 export function useLayout(): {
-  blocks: Ref<LayoutBlock[]>
-  addBlock: (config: LayoutBlockConfig) => LayoutBlock
-  removeBlock: (id: string) => void
-  getBlock: (id: string) => LayoutBlock | undefined
-  recalculate: () => void
-  } {
+    blocks: Ref<LayoutBlock[]>
+    addBlock: (config: LayoutBlockConfig) => LayoutBlock
+    removeBlock: (id: string) => void
+    getBlock: (id: string) => LayoutBlock | undefined
+    recalculate: () => void
+    } {
     if (!layoutManagerInstance) {
         layoutManagerInstance = new LayoutManager()
 
         // Mark all blocks dirty on terminal resize
-        const { width, height } = useTerminal()
+        const {
+            width,
+            height,
+        } = useTerminal()
         watch([width, height], () => {
             layoutManagerInstance?.markAllDirty()
         })

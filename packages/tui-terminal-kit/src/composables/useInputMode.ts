@@ -9,9 +9,9 @@ const callbacks: Array<(mode: InputMode) => void> = []
  * Manage vim-like input modes
  */
 export function useInputMode(config?: InputModeConfig): {
-  mode: Ref<InputMode>
-  setMode: (mode: InputMode) => void
-  onModeChange: (callback: (mode: InputMode) => void) => () => void
+    mode: Ref<InputMode>
+    setMode: (mode: InputMode) => void
+    onModeChange: (callback: (mode: InputMode) => void) => () => void
 } {
     if (!modeInstance) {
         modeInstance = ref(config?.mode ?? InputMode.Normal)

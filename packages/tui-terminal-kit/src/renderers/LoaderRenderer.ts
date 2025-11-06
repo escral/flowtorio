@@ -3,10 +3,10 @@ import type { Renderer } from '../types/Renderer'
 import type { BlockDimensions } from '../types/LayoutBlock'
 
 export interface LoaderData {
-  loading: boolean
-  message?: string
-  spinner?: string[]
-  frame?: number
+    loading: boolean
+    message?: string
+    spinner?: string[]
+    frame?: number
 }
 
 const DEFAULT_SPINNER = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
@@ -16,7 +16,11 @@ const DEFAULT_SPINNER = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧',
  */
 export class LoaderRenderer implements Renderer<LoaderData> {
     render(terminal: Terminal, data: LoaderData, dimensions: BlockDimensions): void {
-        const { contentX, contentY, contentWidth } = dimensions
+        const {
+            contentX,
+            contentY,
+            contentWidth,
+        } = dimensions
 
         terminal.moveTo(contentX, contentY)
         terminal.eraseLine()

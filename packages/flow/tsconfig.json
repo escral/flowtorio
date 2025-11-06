@@ -1,12 +1,16 @@
 {
-  "extends": "@escral/tsconfig/cli",
-  "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist",
-    "paths": {
-      "~/*": ["./src/*"]
-    }
-  },
-  "include": ["src"],
+    "extends": "@escral/tsconfig/cli",
+    "compilerOptions": {
+        "rootDir": "src",
+        "outDir": "dist",
+        "paths": {
+            "~/*": [
+                "./src/*"
+            ]
+        }
+    },
+    "include": [
+        "src"
+    ]
 }
 

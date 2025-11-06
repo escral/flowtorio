@@ -1,16 +1,16 @@
 import { ref, type Ref } from '@vue/reactivity'
 
 export interface AsyncDataOptions {
-  immediate?: boolean
-  onError?: (error: Error) => void
+    immediate?: boolean
+    onError?: (error: Error) => void
 }
 
 export interface UseAsyncDataReturn<T> {
-  data: Ref<T | null>
-  loading: Ref<boolean>
-  error: Ref<Error | null>
-  refresh: () => Promise<void>
-  execute: () => Promise<void>
+    data: Ref<T | null>
+    loading: Ref<boolean>
+    error: Ref<Error | null>
+    refresh: () => Promise<void>
+    execute: () => Promise<void>
 }
 
 /**

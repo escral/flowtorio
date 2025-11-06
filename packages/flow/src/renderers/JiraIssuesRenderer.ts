@@ -3,9 +3,9 @@ import type { Renderer, BlockDimensions } from '@flowtorio/tui-terminal-kit'
 import type { JiraIssue } from '../composables/useJiraIssues'
 
 export interface JiraIssuesData {
-  issues: JiraIssue[]
-  loading?: boolean
-  showMarkers?: boolean
+    issues: JiraIssue[]
+    loading?: boolean
+    showMarkers?: boolean
 }
 
 /**
@@ -13,7 +13,12 @@ export interface JiraIssuesData {
  */
 export class JiraIssuesRenderer implements Renderer<JiraIssuesData> {
     render(terminal: Terminal, data: JiraIssuesData, dimensions: BlockDimensions): void {
-        const { contentX, contentY, contentWidth, contentHeight } = dimensions
+        const {
+            contentX,
+            contentY,
+            contentWidth,
+            contentHeight,
+        } = dimensions
 
         if (data.loading) {
             terminal.moveTo(contentX, contentY)

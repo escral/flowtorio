@@ -2,11 +2,11 @@ import { ref, type Ref } from '@vue/reactivity'
 import { runCommand, type CommandDef } from 'citty'
 
 export interface UseCommandsReturn {
-  commands: Ref<Record<string, CommandDef>>
-  register: (name: string, command: CommandDef) => void
-  unregister: (name: string) => void
-  execute: (commandString: string) => Promise<void>
-  getCommands: () => Record<string, CommandDef>
+    commands: Ref<Record<string, CommandDef>>
+    register: (name: string, command: CommandDef) => void
+    unregister: (name: string) => void
+    execute: (commandString: string) => Promise<void>
+    getCommands: () => Record<string, CommandDef>
 }
 
 /**

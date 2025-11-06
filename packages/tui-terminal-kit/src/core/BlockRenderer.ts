@@ -6,8 +6,8 @@ import type { LayoutBlock, BlockDimensions } from '../types/LayoutBlock'
  */
 export class BlockRenderer {
     /**
-   * Render border and title for a block
-   */
+     * Render border and title for a block
+     */
     renderBorder(terminal: TerminalType, block: LayoutBlock): void {
         if (!block.hasBorder) {
             return
@@ -18,10 +18,10 @@ export class BlockRenderer {
     }
 
     /**
-   * Clear a block area
-   */
+     * Clear a block area
+     */
     clearBlock(terminal: TerminalType, dimensions: BlockDimensions): void {
-    // Clear content area
+        // Clear content area
         for (let y = dimensions.contentY; y < dimensions.contentY + dimensions.contentHeight; y++) {
             terminal.moveTo(dimensions.contentX, y)
             terminal.eraseLine()
@@ -29,8 +29,8 @@ export class BlockRenderer {
     }
 
     /**
-   * Draw a border with optional title
-   */
+     * Draw a border with optional title
+     */
     private drawBorder(
         terminal: TerminalType,
         x: number,

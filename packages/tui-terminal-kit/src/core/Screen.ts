@@ -28,22 +28,22 @@ export class Screen {
     }
 
     /**
-   * Get reactive width
-   */
+     * Get reactive width
+     */
     get width(): Ref<number> {
         return this._width
     }
 
     /**
-   * Get reactive height
-   */
+     * Get reactive height
+     */
     get height(): Ref<number> {
         return this._height
     }
 
     /**
-   * Clear the screen
-   */
+     * Clear the screen
+     */
     clear(): void {
         this.terminal.clear()
     }

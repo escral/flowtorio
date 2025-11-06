@@ -1,7 +1,7 @@
 import type { CommandDef } from 'citty'
 
 export interface TUICommandConfig extends CommandDef {
-  // Can add TUI-specific command config here
+    // Can add TUI-specific command config here
 }
 
 /**

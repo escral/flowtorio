@@ -2,9 +2,9 @@ import type { Terminal } from 'terminal-kit'
 import type { Renderer, BlockDimensions } from '@flowtorio/tui-terminal-kit'
 
 export interface FlowHeaderData {
-  title: string
-  subtitle?: string
-  context?: string
+    title: string
+    subtitle?: string
+    context?: string
 }
 
 /**
@@ -12,7 +12,11 @@ export interface FlowHeaderData {
  */
 export class FlowHeaderRenderer implements Renderer<FlowHeaderData> {
     render(terminal: Terminal, data: FlowHeaderData, dimensions: BlockDimensions): void {
-        const { contentX, contentY, contentWidth } = dimensions
+        const {
+            contentX,
+            contentY,
+            contentWidth,
+        } = dimensions
 
         terminal.moveTo(contentX, contentY)
         terminal.eraseLine()

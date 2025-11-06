@@ -19,6 +19,7 @@ flow
 ### Keybindings
 
 **Normal Mode:**
+
 - `r` - Reload Jira issues
 - `/` - Enter Command mode
 - `f` - Enter Select mode
@@ -26,11 +27,13 @@ flow
 - `q`, `Ctrl+C`, `Ctrl+D` - Exit
 
 **Command Mode:**
+
 - Type commands like: `reload`, `search`, `filter`
 - `ESC` - Back to Normal mode
 - `ENTER` - Execute command
 
 **Select Mode:**
+
 - Press marker keys (`a-z`) to select items
 - `ESC` - Back to Normal mode
 

@@ -2,36 +2,36 @@
  * Defines block position, size, and renderable area
  */
 export interface BlockDimensions {
-  /** Absolute X position */
-  x: number
-  /** Absolute Y position */
-  y: number
-  /** Total width */
-  width: number
-  /** Total height */
-  height: number
-  /** X position after border/padding */
-  contentX: number
-  /** Y position after border/padding */
-  contentY: number
-  /** Width available for content */
-  contentWidth: number
-  /** Height available for content */
-  contentHeight: number
+    /** Absolute X position */
+    x: number
+    /** Absolute Y position */
+    y: number
+    /** Total width */
+    width: number
+    /** Total height */
+    height: number
+    /** X position after border/padding */
+    contentX: number
+    /** Y position after border/padding */
+    contentY: number
+    /** Width available for content */
+    contentWidth: number
+    /** Height available for content */
+    contentHeight: number
 }
 
 /**
  * Configuration for creating a LayoutBlock
  */
 export interface LayoutBlockConfig {
-  id: string
-  x: number
-  y: number
-  width: number
-  height: number
-  hasBorder?: boolean
-  title?: string
-  zIndex?: number
+    id: string
+    x: number
+    y: number
+    width: number
+    height: number
+    hasBorder?: boolean
+    title?: string
+    zIndex?: number
 }
 
 /**
@@ -61,8 +61,8 @@ export class LayoutBlock {
     }
 
     /**
-   * Get dimensions including content area after borders
-   */
+     * Get dimensions including content area after borders
+     */
     getDimensions(): BlockDimensions {
         const borderSize = this.hasBorder ? 1 : 0
         const borderPadding = borderSize * 2
@@ -80,22 +80,22 @@ export class LayoutBlock {
     }
 
     /**
-   * Mark this block as needing re-render
-   */
+     * Mark this block as needing re-render
+     */
     markDirty(): void {
         this.isDirty = true
     }
 
     /**
-   * Mark this block as rendered
-   */
+     * Mark this block as rendered
+     */
     markClean(): void {
         this.isDirty = false
     }
 
     /**
-   * Update block dimensions
-   */
+     * Update block dimensions
+     */
     setDimensions(x: number, y: number, width: number, height: number): void {
         if (this.x !== x || this.y !== y || this.width !== width || this.height !== height) {
             this.x = x

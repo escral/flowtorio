@@ -1,20 +1,20 @@
 import { ref, type Ref } from '@vue/reactivity'
 
 export interface LogEntry {
-  level: 'log' | 'error' | 'warn' | 'info'
-  message: string
-  timestamp: Date
-  args: any[]
+    level: 'log' | 'error' | 'warn' | 'info'
+    message: string
+    timestamp: Date
+    args: any[]
 }
 
 export interface UseLoggerReturn {
-  logs: Ref<LogEntry[]>
-  log: (...args: any[]) => void
-  error: (...args: any[]) => void
-  warn: (...args: any[]) => void
-  info: (...args: any[]) => void
-  clear: () => void
-  latest: () => LogEntry | undefined
+    logs: Ref<LogEntry[]>
+    log: (...args: any[]) => void
+    error: (...args: any[]) => void
+    warn: (...args: any[]) => void
+    info: (...args: any[]) => void
+    clear: () => void
+    latest: () => LogEntry | undefined
 }
 
 /**

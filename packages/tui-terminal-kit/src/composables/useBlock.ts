@@ -13,9 +13,9 @@ export function useBlock<TData>(
     block: LayoutBlock,
     renderer: Renderer<TData>,
 ): {
-  render: (data: TData) => void
-  dimensions: ComputedRef<BlockDimensions>
-  markDirty: () => void
+    render: (data: TData) => void
+    dimensions: ComputedRef<BlockDimensions>
+    markDirty: () => void
 } {
     const { terminal } = useTerminal()
 

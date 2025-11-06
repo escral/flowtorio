@@ -2,30 +2,30 @@ import { useAsyncData, type UseAsyncDataReturn } from '@flowtorio/cli'
 import { useJira } from './useJira'
 
 export interface JiraIssue {
-  id: string
-  key: string
-  fields: {
-    summary: string
-    status?: {
-      name: string
-    }
-    parent?: {
-      key: string
-      fields: {
+    id: string
+    key: string
+    fields: {
         summary: string
         status?: {
-          name: string
+            name: string
         }
-      }
+        parent?: {
+            key: string
+            fields: {
+                summary: string
+                status?: {
+                    name: string
+                }
+            }
+        }
+        [key: string]: any
     }
-    [key: string]: any
-  }
 }
 
 export interface JiraSearchOptions {
-  jql: string
-  maxResults?: number
-  fields?: string[]
+    jql: string
+    maxResults?: number
+    fields?: string[]
 }
 
 /**

@@ -13,8 +13,8 @@ export class Terminal {
     }
 
     /**
-   * Initialize terminal for TUI mode
-   */
+     * Initialize terminal for TUI mode
+     */
     initialize(): void {
         if (this.initialized) {
             return
@@ -27,8 +27,8 @@ export class Terminal {
     }
 
     /**
-   * Cleanup and restore terminal
-   */
+     * Cleanup and restore terminal
+     */
     dispose(): void {
         if (!this.initialized) {
             return
@@ -42,16 +42,19 @@ export class Terminal {
     }
 
     /**
-   * Get the raw terminal instance
-   */
+     * Get the raw terminal instance
+     */
     getInstance(): TerminalType {
         return this.term
     }
 
     /**
-   * Get terminal dimensions
-   */
-    getDimensions(): { width: number; height: number } {
+     * Get terminal dimensions
+     */
+    getDimensions(): {
+        width: number;
+        height: number
+        } {
         return {
             width: this.term.width,
             height: this.term.height,
@@ -59,8 +62,8 @@ export class Terminal {
     }
 
     /**
-   * Clear the entire screen
-   */
+     * Clear the entire screen
+     */
     clear(): void {
         this.term.clear()
     }
