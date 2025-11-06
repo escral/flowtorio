@@ -15,34 +15,34 @@ const DEFAULT_SPINNER = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧',
  * Renderer for loading spinners
  */
 export class LoaderRenderer implements Renderer<LoaderData> {
-  render(terminal: Terminal, data: LoaderData, dimensions: BlockDimensions): void {
-    const { contentX, contentY, contentWidth } = dimensions
+    render(terminal: Terminal, data: LoaderData, dimensions: BlockDimensions): void {
+        const { contentX, contentY, contentWidth } = dimensions
 
-    terminal.moveTo(contentX, contentY)
-    terminal.eraseLine()
+        terminal.moveTo(contentX, contentY)
+        terminal.eraseLine()
 
-    if (!data.loading) {
-      return
+        if (!data.loading) {
+            return
+        }
+
+        const spinner = data.spinner ?? DEFAULT_SPINNER
+        const frame = data.frame ?? 0
+        const spinnerChar = spinner[frame % spinner.length]
+
+        terminal.cyan(spinnerChar)
+        terminal(' ')
+
+        if (data.message) {
+            const text = data.message.slice(0, contentWidth - 2)
+            terminal(text)
+        }
+
+        terminal.styleReset()
     }
 
-    const spinner = data.spinner ?? DEFAULT_SPINNER
-    const frame = data.frame ?? 0
-    const spinnerChar = spinner[frame % spinner.length]
-
-    terminal.cyan(spinnerChar)
-    terminal(' ')
-
-    if (data.message) {
-      const text = data.message.slice(0, contentWidth - 2)
-      terminal(text)
+    clear(terminal: Terminal, dimensions: BlockDimensions): void {
+        terminal.moveTo(dimensions.contentX, dimensions.contentY)
+        terminal.eraseLine()
     }
-
-    terminal.styleReset()
-  }
-
-  clear(terminal: Terminal, dimensions: BlockDimensions): void {
-    terminal.moveTo(dimensions.contentX, dimensions.contentY)
-    terminal.eraseLine()
-  }
 }
 

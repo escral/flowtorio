@@ -1,14 +1,14 @@
 import { watch } from '@vue/reactivity'
 import {
-  useApp,
-  useLayout,
-  useBlock,
-  useInputMode,
-  useKeybindings,
-  useTerminal,
-  InputMode,
-  StatusBarRenderer,
-  type StatusBarData,
+    useApp,
+    useLayout,
+    useBlock,
+    useInputMode,
+    useKeybindings,
+    useTerminal,
+    InputMode,
+    StatusBarRenderer,
+    type StatusBarData,
 } from '@flowtorio/tui-terminal-kit'
 import { useCommands, defineCommand, useLogger, useNotification } from '@flowtorio/cli'
 import { useJiraIssues, DEFAULT_JQL } from '../composables/useJiraIssues'
@@ -19,203 +19,205 @@ import { FlowHeaderRenderer } from '../renderers/FlowHeaderRenderer'
  * Main Flow application
  */
 export function createFlowApp() {
-  // Core composables
-  const app = useApp()
-  const layout = useLayout()
-  const { mode, setMode } = useInputMode()
-  const commands = useCommands()
-  const logger = useLogger()
-  const notifications = useNotification()
+    // Core composables
+    const app = useApp()
+    const layout = useLayout()
+    const { mode, setMode } = useInputMode()
+    const commands = useCommands()
+    const logger = useLogger()
+    const notifications = useNotification()
 
-  // Jira data
-  const jiraIssues = useJiraIssues({ jql: DEFAULT_JQL, maxResults: 20 })
+    // Jira data
+    const jiraIssues = useJiraIssues({ jql: DEFAULT_JQL, maxResults: 20 })
 
-  // Get terminal from composable
-  const { terminal } = useTerminal()
+    // Get terminal from composable
+    const { terminal } = useTerminal()
   
-  // Calculate dimensions (reactive to terminal size)
-  const createBlocks = () => {
-    layout.blocks.value = [] // Clear existing blocks
+    // Calculate dimensions (reactive to terminal size)
+    const createBlocks = () => {
+        layout.blocks.value = [] // Clear existing blocks
     
-    const headerBlock = layout.addBlock({
-      id: 'header',
-      x: 1,
-      y: 1,
-      width: terminal.width,
-      height: 3,
-      hasBorder: false,
-    })
+        const headerBlock = layout.addBlock({
+            id: 'header',
+            x: 1,
+            y: 1,
+            width: terminal.width,
+            height: 3,
+            hasBorder: false,
+        })
 
-    const contentBlock = layout.addBlock({
-      id: 'content',
-      x: 1,
-      y: 4,
-      width: terminal.width,
-      height: terminal.height - 6,
-      hasBorder: false,
-    })
+        const contentBlock = layout.addBlock({
+            id: 'content',
+            x: 1,
+            y: 4,
+            width: terminal.width,
+            height: terminal.height - 6,
+            hasBorder: false,
+        })
 
-    const footerBlock = layout.addBlock({
-      id: 'footer',
-      x: 1,
-      y: terminal.height - 2,
-      width: terminal.width,
-      height: 3,
-      hasBorder: false,
-    })
+        const footerBlock = layout.addBlock({
+            id: 'footer',
+            x: 1,
+            y: terminal.height - 2,
+            width: terminal.width,
+            height: 3,
+            hasBorder: false,
+        })
 
-    return { headerBlock, contentBlock, footerBlock }
-  }
+        return { headerBlock, contentBlock, footerBlock }
+    }
 
-  const { headerBlock, contentBlock, footerBlock } = createBlocks()
+    const { headerBlock, contentBlock, footerBlock } = createBlocks()
 
-  // Create renderers
-  const headerRenderer = new FlowHeaderRenderer()
-  const issuesRenderer = new JiraIssuesRenderer()
-  const statusBarRenderer = new StatusBarRenderer()
+    // Create renderers
+    const headerRenderer = new FlowHeaderRenderer()
+    const issuesRenderer = new JiraIssuesRenderer()
+    const statusBarRenderer = new StatusBarRenderer()
 
-  // Setup blocks with renderers
-  const headerBlockRenderer = useBlock(headerBlock, headerRenderer)
-  const contentBlockRenderer = useBlock(contentBlock, issuesRenderer)
-  const footerBlockRenderer = useBlock(footerBlock, statusBarRenderer)
+    // Setup blocks with renderers
+    const headerBlockRenderer = useBlock(headerBlock, headerRenderer)
+    const contentBlockRenderer = useBlock(contentBlock, issuesRenderer)
+    const footerBlockRenderer = useBlock(footerBlock, statusBarRenderer)
 
-  // Register render callbacks
-  app.onRender(() => {
+    // Register render callbacks
+    app.onRender(() => {
     // Render header
-    headerBlockRenderer.render({
-      title: 'Flowtorio',
-      subtitle: 'Flow Control Center',
-      context: `Issues: ${jiraIssues.data.value?.length || 0}`,
+        headerBlockRenderer.render({
+            title: 'Flowtorio',
+            subtitle: 'Flow Control Center',
+            context: `Issues: ${jiraIssues.data.value?.length || 0}`,
+        })
+
+        // Render content (Jira issues)
+        contentBlockRenderer.render({
+            issues: jiraIssues.data.value || [],
+            loading: jiraIssues.loading.value,
+            showMarkers: mode.value === InputMode.Select,
+        })
+
+        // Render footer (status bar)
+        const latestLog = logger.latest()
+        const latestNotification = notifications.notifications.value[notifications.notifications.value.length - 1]
+
+        const statusData: StatusBarData = {
+            mode: mode.value,
+            message: latestLog?.message,
+        }
+
+        if (latestNotification) {
+            statusData.notification = latestNotification
+        }
+
+        footerBlockRenderer.render(statusData)
     })
 
-    // Render content (Jira issues)
-    contentBlockRenderer.render({
-      issues: jiraIssues.data.value || [],
-      loading: jiraIssues.loading.value,
-      showMarkers: mode.value === InputMode.Select,
+    // Setup keybindings for Normal mode
+    useKeybindings(InputMode.Normal, {
+        r: async () => {
+            logger.log('Reloading issues...')
+            app.render()
+            await jiraIssues.refresh()
+            logger.log(`Loaded ${jiraIssues.data.value?.length || 0} issues`)
+            app.render()
+        },
+        q: () => app.exit(),
+        CTRL_C: () => app.exit(),
+        CTRL_D: () => app.exit(),
+        h: () => {
+            notifications.notify('Press r=reload, /=command, f=select, q=quit', 'info', 5000)
+            app.render()
+        },
     })
 
-    // Render footer (status bar)
-    const latestLog = logger.latest()
-    const latestNotification = notifications.notifications.value[notifications.notifications.value.length - 1]
-
-    const statusData: StatusBarData = {
-      mode: mode.value,
-      message: latestLog?.message,
-    }
-
-    if (latestNotification) {
-      statusData.notification = latestNotification
-    }
-
-    footerBlockRenderer.render(statusData)
-  })
-
-  // Setup keybindings for Normal mode
-  useKeybindings(InputMode.Normal, {
-    r: async () => {
-      logger.log('Reloading issues...')
-      app.render()
-      await jiraIssues.refresh()
-      logger.log(`Loaded ${jiraIssues.data.value?.length || 0} issues`)
-      app.render()
-    },
-    q: () => app.exit(),
-    CTRL_C: () => app.exit(),
-    CTRL_D: () => app.exit(),
-    h: () => {
-      notifications.notify('Press r=reload, /=command, f=select, q=quit', 'info', 5000)
-      app.render()
-    },
-  })
-
-  // Setup keybindings for Command mode
-  useKeybindings(InputMode.Command, {
+    // Setup keybindings for Command mode
+    useKeybindings(InputMode.Command, {
     // Command mode input will be handled separately
-  })
+    })
 
-  // Setup keybindings for Select mode
-  useKeybindings(InputMode.Select, {
-    a: () => selectIssue(0),
-    s: () => selectIssue(1),
-    d: () => selectIssue(2),
-    f: () => selectIssue(3),
-    g: () => selectIssue(4),
-    h: () => selectIssue(5),
-    j: () => selectIssue(6),
-    k: () => selectIssue(7),
-    l: () => selectIssue(8),
-  })
+    // Setup keybindings for Select mode
+    useKeybindings(InputMode.Select, {
+        a: () => selectIssue(0),
+        s: () => selectIssue(1),
+        d: () => selectIssue(2),
+        f: () => selectIssue(3),
+        g: () => selectIssue(4),
+        h: () => selectIssue(5),
+        j: () => selectIssue(6),
+        k: () => selectIssue(7),
+        l: () => selectIssue(8),
+    })
 
-  // Select issue handler
-  const selectIssue = (index: number) => {
-    const issues = jiraIssues.data.value
-    if (!issues || index >= issues.length) {
-      notifications.notify('Invalid selection', 'error')
-      app.render()
-      return
+    // Select issue handler
+    const selectIssue = (index: number) => {
+        const issues = jiraIssues.data.value
+
+        if (!issues || index >= issues.length) {
+            notifications.notify('Invalid selection', 'error')
+            app.render()
+
+            return
+        }
+
+        const issue = issues[index]
+        logger.log(`Selected: ${issue.key} - ${issue.fields.summary}`)
+        notifications.notify(`Selected: ${issue.key}`, 'success')
+        setMode(InputMode.Normal)
+        app.render()
     }
 
-    const issue = issues[index]
-    logger.log(`Selected: ${issue.key} - ${issue.fields.summary}`)
-    notifications.notify(`Selected: ${issue.key}`, 'success')
-    setMode(InputMode.Normal)
-    app.render()
-  }
+    // Register commands
+    commands.register('reload', defineCommand({
+        meta: {
+            name: 'reload',
+            description: 'Reload Jira issues',
+        },
+        async run() {
+            await jiraIssues.refresh()
+            logger.log(`Reloaded ${jiraIssues.data.value?.length || 0} issues`)
+            app.render()
+        },
+    }))
 
-  // Register commands
-  commands.register('reload', defineCommand({
-    meta: {
-      name: 'reload',
-      description: 'Reload Jira issues',
-    },
-    async run() {
-      await jiraIssues.refresh()
-      logger.log(`Reloaded ${jiraIssues.data.value?.length || 0} issues`)
-      app.render()
-    },
-  }))
+    commands.register('search', defineCommand({
+        meta: {
+            name: 'search',
+            description: 'Search issues with JQL',
+        },
+        args: {
+            jql: {
+                type: 'positional',
+                description: 'JQL query',
+                required: true,
+            },
+        },
+        async run({ args }) {
+            logger.log(`Searching: ${args.jql}`)
+            // TODO: Implement search functionality
+            app.render()
+        },
+    }))
 
-  commands.register('search', defineCommand({
-    meta: {
-      name: 'search',
-      description: 'Search issues with JQL',
-    },
-    args: {
-      jql: {
-        type: 'positional',
-        description: 'JQL query',
-        required: true,
-      },
-    },
-    async run({ args }) {
-      logger.log(`Searching: ${args.jql}`)
-      // TODO: Implement search functionality
-      app.render()
-    },
-  }))
+    // Watch for errors
+    watch(jiraIssues.error, (error) => {
+        if (error) {
+            logger.error('Error fetching issues:', error.message)
+            notifications.notify(`Error: ${error.message}`, 'error')
+            app.render()
+        }
+    })
 
-  // Watch for errors
-  watch(jiraIssues.error, (error) => {
-    if (error) {
-      logger.error('Error fetching issues:', error.message)
-      notifications.notify(`Error: ${error.message}`, 'error')
-      app.render()
+    // Watch for data changes to trigger re-render
+    watch([jiraIssues.data, jiraIssues.loading], () => {
+        app.render()
+    })
+
+    return {
+        run: () => {
+            app.run()
+        },
+        exit: () => {
+            app.exit()
+        },
     }
-  })
-
-  // Watch for data changes to trigger re-render
-  watch([jiraIssues.data, jiraIssues.loading], () => {
-    app.render()
-  })
-
-  return {
-    run: () => {
-      app.run()
-    },
-    exit: () => {
-      app.exit()
-    },
-  }
 }
 

@@ -13,42 +13,43 @@ export interface UseCommandsReturn {
  * Register and execute citty commands from Command mode
  */
 export function useCommands(): UseCommandsReturn {
-  const commands = ref<Record<string, CommandDef>>({})
+    const commands = ref<Record<string, CommandDef>>({})
 
-  const register = (name: string, command: CommandDef) => {
-    commands.value[name] = command
-  }
-
-  const unregister = (name: string) => {
-    delete commands.value[name]
-  }
-
-  const execute = async (commandString: string) => {
-    const parts = commandString.trim().split(/\s+/)
-    const commandName = parts[0]
-    const args = parts.slice(1)
-
-    const command = commands.value[commandName]
-    if (!command) {
-      throw new Error(`Command not found: ${commandName}`)
+    const register = (name: string, command: CommandDef) => {
+        commands.value[name] = command
     }
 
-    // Execute the command using citty's runCommand
-    await runCommand(command, {
-      rawArgs: args,
-    })
-  }
+    const unregister = (name: string) => {
+        delete commands.value[name]
+    }
 
-  const getCommands = () => {
-    return { ...commands.value }
-  }
+    const execute = async (commandString: string) => {
+        const parts = commandString.trim().split(/\s+/)
+        const commandName = parts[0]
+        const args = parts.slice(1)
 
-  return {
-    commands,
-    register,
-    unregister,
-    execute,
-    getCommands,
-  }
+        const command = commands.value[commandName]
+
+        if (!command) {
+            throw new Error(`Command not found: ${commandName}`)
+        }
+
+        // Execute the command using citty's runCommand
+        await runCommand(command, {
+            rawArgs: args,
+        })
+    }
+
+    const getCommands = () => {
+        return { ...commands.value }
+    }
+
+    return {
+        commands,
+        register,
+        unregister,
+        execute,
+        getCommands,
+    }
 }
 

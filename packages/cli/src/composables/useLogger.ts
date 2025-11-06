@@ -21,39 +21,39 @@ export interface UseLoggerReturn {
  * Reactive logger
  */
 export function useLogger(): UseLoggerReturn {
-  const logs = ref<LogEntry[]>([])
+    const logs = ref<LogEntry[]>([])
 
-  const addLog = (level: LogEntry['level'], ...args: any[]) => {
-    const message = args.map(arg => String(arg)).join(' ')
-    logs.value.push({
-      level,
-      message,
-      timestamp: new Date(),
-      args,
-    })
-  }
+    const addLog = (level: LogEntry['level'], ...args: any[]) => {
+        const message = args.map(arg => String(arg)).join(' ')
+        logs.value.push({
+            level,
+            message,
+            timestamp: new Date(),
+            args,
+        })
+    }
 
-  const log = (...args: any[]) => addLog('log', ...args)
-  const error = (...args: any[]) => addLog('error', ...args)
-  const warn = (...args: any[]) => addLog('warn', ...args)
-  const info = (...args: any[]) => addLog('info', ...args)
+    const log = (...args: any[]) => addLog('log', ...args)
+    const error = (...args: any[]) => addLog('error', ...args)
+    const warn = (...args: any[]) => addLog('warn', ...args)
+    const info = (...args: any[]) => addLog('info', ...args)
 
-  const clear = () => {
-    logs.value = []
-  }
+    const clear = () => {
+        logs.value = []
+    }
 
-  const latest = () => {
-    return logs.value[logs.value.length - 1]
-  }
+    const latest = () => {
+        return logs.value[logs.value.length - 1]
+    }
 
-  return {
-    logs,
-    log,
-    error,
-    warn,
-    info,
-    clear,
-    latest,
-  }
+    return {
+        logs,
+        log,
+        error,
+        warn,
+        info,
+        clear,
+        latest,
+    }
 }
 

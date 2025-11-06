@@ -32,25 +32,25 @@ export interface JiraSearchOptions {
  * Fetch and manage Jira issues with useAsyncData
  */
 export function useJiraIssues(
-  options: JiraSearchOptions,
+    options: JiraSearchOptions,
 ): UseAsyncDataReturn<JiraIssue[]> {
-  const client = useJira()
+    const client = useJira()
 
-  return useAsyncData<JiraIssue[]>(
-    `jira-issues-${options.jql}`,
-    async () => {
-      const result = await client.issueSearch.searchForIssuesUsingJql({
-        jql: options.jql,
-        maxResults: options.maxResults ?? 50,
-        fields: options.fields ?? ['summary', 'status', 'parent'],
-      })
+    return useAsyncData<JiraIssue[]>(
+        `jira-issues-${options.jql}`,
+        async () => {
+            const result = await client.issueSearch.searchForIssuesUsingJql({
+                jql: options.jql,
+                maxResults: options.maxResults ?? 50,
+                fields: options.fields ?? ['summary', 'status', 'parent'],
+            })
 
-      return (result.issues || []) as JiraIssue[]
-    },
-    {
-      immediate: true,
-    },
-  )
+            return (result.issues || []) as JiraIssue[]
+        },
+        {
+            immediate: true,
+        },
+    )
 }
 
 /**

@@ -38,72 +38,72 @@ export interface LayoutBlockConfig {
  * LayoutBlock class for managing individual UI blocks
  */
 export class LayoutBlock {
-  id: string
-  x: number
-  y: number
-  width: number
-  height: number
-  hasBorder: boolean
-  title?: string
-  zIndex: number
-  isDirty: boolean
+    id: string
+    x: number
+    y: number
+    width: number
+    height: number
+    hasBorder: boolean
+    title?: string
+    zIndex: number
+    isDirty: boolean
 
-  constructor(config: LayoutBlockConfig) {
-    this.id = config.id
-    this.x = config.x
-    this.y = config.y
-    this.width = config.width
-    this.height = config.height
-    this.hasBorder = config.hasBorder ?? false
-    this.title = config.title
-    this.zIndex = config.zIndex ?? 0
-    this.isDirty = true // Start as dirty to ensure initial render
-  }
+    constructor(config: LayoutBlockConfig) {
+        this.id = config.id
+        this.x = config.x
+        this.y = config.y
+        this.width = config.width
+        this.height = config.height
+        this.hasBorder = config.hasBorder ?? false
+        this.title = config.title
+        this.zIndex = config.zIndex ?? 0
+        this.isDirty = true // Start as dirty to ensure initial render
+    }
 
-  /**
+    /**
    * Get dimensions including content area after borders
    */
-  getDimensions(): BlockDimensions {
-    const borderSize = this.hasBorder ? 1 : 0
-    const borderPadding = borderSize * 2
+    getDimensions(): BlockDimensions {
+        const borderSize = this.hasBorder ? 1 : 0
+        const borderPadding = borderSize * 2
 
-    return {
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      height: this.height,
-      contentX: this.x + borderSize,
-      contentY: this.y + borderSize,
-      contentWidth: Math.max(0, this.width - borderPadding),
-      contentHeight: Math.max(0, this.height - borderPadding),
+        return {
+            x: this.x,
+            y: this.y,
+            width: this.width,
+            height: this.height,
+            contentX: this.x + borderSize,
+            contentY: this.y + borderSize,
+            contentWidth: Math.max(0, this.width - borderPadding),
+            contentHeight: Math.max(0, this.height - borderPadding),
+        }
     }
-  }
 
-  /**
+    /**
    * Mark this block as needing re-render
    */
-  markDirty(): void {
-    this.isDirty = true
-  }
+    markDirty(): void {
+        this.isDirty = true
+    }
 
-  /**
+    /**
    * Mark this block as rendered
    */
-  markClean(): void {
-    this.isDirty = false
-  }
+    markClean(): void {
+        this.isDirty = false
+    }
 
-  /**
+    /**
    * Update block dimensions
    */
-  setDimensions(x: number, y: number, width: number, height: number): void {
-    if (this.x !== x || this.y !== y || this.width !== width || this.height !== height) {
-      this.x = x
-      this.y = y
-      this.width = width
-      this.height = height
-      this.markDirty()
+    setDimensions(x: number, y: number, width: number, height: number): void {
+        if (this.x !== x || this.y !== y || this.width !== width || this.height !== height) {
+            this.x = x
+            this.y = y
+            this.width = width
+            this.height = height
+            this.markDirty()
+        }
     }
-  }
 }
 

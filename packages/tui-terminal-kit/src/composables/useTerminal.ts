@@ -14,21 +14,21 @@ export function useTerminal(): {
   width: Ref<number>
   height: Ref<number>
   terminal: TerminalType
-} {
-  if (!terminalInstance) {
-    terminalInstance = new Terminal()
-    terminalInstance.initialize()
-  }
+  } {
+    if (!terminalInstance) {
+        terminalInstance = new Terminal()
+        terminalInstance.initialize()
+    }
 
-  if (!screenInstance) {
-    screenInstance = new Screen(terminalInstance)
-  }
+    if (!screenInstance) {
+        screenInstance = new Screen(terminalInstance)
+    }
 
-  return {
-    width: screenInstance.width,
-    height: screenInstance.height,
-    terminal: terminalInstance.getInstance(),
-  }
+    return {
+        width: screenInstance.width,
+        height: screenInstance.height,
+        terminal: terminalInstance.getInstance(),
+    }
 }
 
 /**
@@ -37,30 +37,30 @@ export function useTerminal(): {
 export function getTerminalCore(): {
   terminal: Terminal
   screen: Screen
-} {
-  if (!terminalInstance) {
-    terminalInstance = new Terminal()
-    terminalInstance.initialize()
-  }
+  } {
+    if (!terminalInstance) {
+        terminalInstance = new Terminal()
+        terminalInstance.initialize()
+    }
 
-  if (!screenInstance) {
-    screenInstance = new Screen(terminalInstance)
-  }
+    if (!screenInstance) {
+        screenInstance = new Screen(terminalInstance)
+    }
 
-  return {
-    terminal: terminalInstance,
-    screen: screenInstance,
-  }
+    return {
+        terminal: terminalInstance,
+        screen: screenInstance,
+    }
 }
 
 /**
  * Cleanup terminal (call on exit)
  */
 export function disposeTerminal(): void {
-  if (terminalInstance) {
-    terminalInstance.dispose()
-    terminalInstance = null
-  }
-  screenInstance = null
+    if (terminalInstance) {
+        terminalInstance.dispose()
+        terminalInstance = null
+    }
+    screenInstance = null
 }
 

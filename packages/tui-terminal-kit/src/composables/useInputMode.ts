@@ -13,49 +13,50 @@ export function useInputMode(config?: InputModeConfig): {
   setMode: (mode: InputMode) => void
   onModeChange: (callback: (mode: InputMode) => void) => () => void
 } {
-  if (!modeInstance) {
-    modeInstance = ref(config?.mode ?? InputMode.Normal)
+    if (!modeInstance) {
+        modeInstance = ref(config?.mode ?? InputMode.Normal)
 
-    // Watch for mode changes and notify callbacks
-    watch(modeInstance, (newMode) => {
-      for (const callback of callbacks) {
-        callback(newMode)
-      }
-    })
-  }
-
-  const setMode = (mode: InputMode) => {
-    if (modeInstance) {
-      modeInstance.value = mode
+        // Watch for mode changes and notify callbacks
+        watch(modeInstance, (newMode) => {
+            for (const callback of callbacks) {
+                callback(newMode)
+            }
+        })
     }
-  }
 
-  const onModeChange = (callback: (mode: InputMode) => void) => {
-    callbacks.push(callback)
-
-    // Return unsubscribe function
-    return () => {
-      const index = callbacks.indexOf(callback)
-      if (index !== -1) {
-        callbacks.splice(index, 1)
-      }
+    const setMode = (mode: InputMode) => {
+        if (modeInstance) {
+            modeInstance.value = mode
+        }
     }
-  }
 
-  return {
-    mode: modeInstance,
-    setMode,
-    onModeChange,
-  }
+    const onModeChange = (callback: (mode: InputMode) => void) => {
+        callbacks.push(callback)
+
+        // Return unsubscribe function
+        return () => {
+            const index = callbacks.indexOf(callback)
+
+            if (index !== -1) {
+                callbacks.splice(index, 1)
+            }
+        }
+    }
+
+    return {
+        mode: modeInstance,
+        setMode,
+        onModeChange,
+    }
 }
 
 /**
  * Reset input mode (for testing or cleanup)
  */
 export function resetInputMode(): void {
-  if (modeInstance) {
-    modeInstance.value = InputMode.Normal
-  }
-  callbacks.length = 0
+    if (modeInstance) {
+        modeInstance.value = InputMode.Normal
+    }
+    callbacks.length = 0
 }
 

@@ -17,46 +17,47 @@ export interface UseAsyncDataReturn<T> {
  * Generic async data fetching with loading/error states (like Nuxt's useAsyncData)
  */
 export function useAsyncData<T>(
-  key: string,
-  fetcher: () => Promise<T>,
-  options: AsyncDataOptions = {},
+    key: string,
+    fetcher: () => Promise<T>,
+    options: AsyncDataOptions = {},
 ): UseAsyncDataReturn<T> {
-  const data = ref<T | null>(null)
-  const loading = ref(false)
-  const error = ref<Error | null>(null)
+    const data = ref<T | null>(null)
+    const loading = ref(false)
+    const error = ref<Error | null>(null)
 
-  const execute = async () => {
-    loading.value = true
-    error.value = null
+    const execute = async () => {
+        loading.value = true
+        error.value = null
 
-    try {
-      const result = await fetcher()
-      data.value = result
-    } catch (err) {
-      error.value = err instanceof Error ? err : new Error(String(err))
-      if (options.onError) {
-        options.onError(error.value)
-      }
-    } finally {
-      loading.value = false
+        try {
+            const result = await fetcher()
+            data.value = result
+        } catch (err) {
+            error.value = err instanceof Error ? err : new Error(String(err))
+
+            if (options.onError) {
+                options.onError(error.value)
+            }
+        } finally {
+            loading.value = false
+        }
     }
-  }
 
-  const refresh = async () => {
-    await execute()
-  }
+    const refresh = async () => {
+        await execute()
+    }
 
-  // Execute immediately if specified
-  if (options.immediate !== false) {
-    execute()
-  }
+    // Execute immediately if specified
+    if (options.immediate !== false) {
+        execute()
+    }
 
-  return {
-    data: data as Ref<T | null>,
-    loading,
-    error,
-    refresh,
-    execute,
-  }
+    return {
+        data: data as Ref<T | null>,
+        loading,
+        error,
+        refresh,
+        execute,
+    }
 }
 

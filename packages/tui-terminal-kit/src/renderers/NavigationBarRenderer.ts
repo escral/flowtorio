@@ -16,50 +16,50 @@ export interface NavigationBarData {
  * Renderer for navigation breadcrumbs
  */
 export class NavigationBarRenderer implements Renderer<NavigationBarData> {
-  render(terminal: Terminal, data: NavigationBarData, dimensions: BlockDimensions): void {
-    const { contentX, contentY, contentWidth } = dimensions
-    const separator = data.separator ?? ' > '
+    render(terminal: Terminal, data: NavigationBarData, dimensions: BlockDimensions): void {
+        const { contentX, contentY, contentWidth } = dimensions
+        const separator = data.separator ?? ' > '
 
-    terminal.moveTo(contentX, contentY)
+        terminal.moveTo(contentX, contentY)
 
-    let parts: string[] = []
-    for (const item of data.items) {
-      parts.push(item.label)
-    }
+        const parts: string[] = []
+        for (const item of data.items) {
+            parts.push(item.label)
+        }
 
-    const text = parts.join(separator)
-    const truncated = text.slice(0, contentWidth)
+        const text = parts.join(separator)
+        const truncated = text.slice(0, contentWidth)
 
-    // Render with styling
-    terminal.styleReset()
-    let pos = 0
-    for (let i = 0; i < data.items.length; i++) {
-      const item = data.items[i]
+        // Render with styling
+        terminal.styleReset()
+        let pos = 0
+        for (let i = 0; i < data.items.length; i++) {
+            const item = data.items[i]
       
-      if (item.active) {
-        terminal.bold.cyan(item.label)
-      } else {
-        terminal.dim(item.label)
-      }
+            if (item.active) {
+                terminal.bold.cyan(item.label)
+            } else {
+                terminal.dim(item.label)
+            }
 
-      pos += item.label.length
+            pos += item.label.length
 
-      if (i < data.items.length - 1) {
-        terminal.dim(separator)
-        pos += separator.length
-      }
+            if (i < data.items.length - 1) {
+                terminal.dim(separator)
+                pos += separator.length
+            }
 
-      if (pos >= contentWidth) {
-        break
-      }
+            if (pos >= contentWidth) {
+                break
+            }
+        }
+
+        terminal.styleReset()
     }
 
-    terminal.styleReset()
-  }
-
-  clear(terminal: Terminal, dimensions: BlockDimensions): void {
-    terminal.moveTo(dimensions.contentX, dimensions.contentY)
-    terminal.eraseLine()
-  }
+    clear(terminal: Terminal, dimensions: BlockDimensions): void {
+        terminal.moveTo(dimensions.contentX, dimensions.contentY)
+        terminal.eraseLine()
+    }
 }
 

@@ -12,7 +12,7 @@
         "build": "pnpm -r -F ./packages/* run build",
         "dev": "pnpm -F @flowtorio/cli dev",
         "test": "pnpm -r -F ./packages/* run test",
-        "lint": "pnpm -r -F ./packages/* run lint",
+        "lint": "pnpm eslint --ext .ts,.vue,.js .",
         "release": "pnpm -r -F ./packages/* run release",
         "flow": "pnpm -C packages/cli run flow"
     },

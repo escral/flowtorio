@@ -11,30 +11,31 @@ export interface UseAsyncStateReturn<T> {
  * Simpler version for managing async state
  */
 export function useAsyncState<T>(initialState: T): UseAsyncStateReturn<T> {
-  const state = ref(initialState) as Ref<T>
-  const loading = ref(false)
-  const error = ref<Error | null>(null)
+    const state = ref(initialState) as Ref<T>
+    const loading = ref(false)
+    const error = ref<Error | null>(null)
 
-  const execute = async <R>(fn: () => Promise<R>): Promise<R> => {
-    loading.value = true
-    error.value = null
+    const execute = async <R>(fn: () => Promise<R>): Promise<R> => {
+        loading.value = true
+        error.value = null
 
-    try {
-      const result = await fn()
-      return result
-    } catch (err) {
-      error.value = err instanceof Error ? err : new Error(String(err))
-      throw err
-    } finally {
-      loading.value = false
+        try {
+            const result = await fn()
+
+            return result
+        } catch (err) {
+            error.value = err instanceof Error ? err : new Error(String(err))
+            throw err
+        } finally {
+            loading.value = false
+        }
     }
-  }
 
-  return {
-    state,
-    loading,
-    error,
-    execute,
-  }
+    return {
+        state,
+        loading,
+        error,
+        execute,
+    }
 }
 

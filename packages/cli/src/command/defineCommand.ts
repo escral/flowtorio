@@ -8,6 +8,6 @@ export interface TUICommandConfig extends CommandDef {
  * Helper to define commands that work with TUI
  */
 export function defineCommand(config: TUICommandConfig): CommandDef {
-  return config
+    return config
 }
 
