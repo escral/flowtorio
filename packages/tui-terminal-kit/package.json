@@ -1,0 +1,41 @@
+{
+  "name": "@flowtorio/tui-terminal-kit",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/escral/flowtorio.git",
+    "directory": "packages/tui-terminal-kit"
+  },
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "author": "Alexander Topalo <topaloalexander@gmail.com>",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@vue/reactivity": "^3.5.22",
+    "terminal-kit": "^3.1.2"
+  },
+  "devDependencies": {
+    "@escral/lint": "^2.0.10",
+    "@escral/tsconfig": "^0.2.1",
+    "@types/terminal-kit": "^2.5.7",
+    "tsdown": "^0.15.9"
+  },
+  "engines": {
+    "node": ">=18.0"
+  }
+}
+

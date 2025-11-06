@@ -32,6 +32,43 @@ importers:
 
   packages/cli:
     dependencies:
+      '@flowtorio/tui-terminal-kit':
+        specifier: workspace:*
+        version: link:../tui-terminal-kit
+      '@vue/reactivity':
+        specifier: ^3.5.22
+        version: 3.5.22
+      citty:
+        specifier: ^0.1.6
+        version: 0.1.6
+      consola:
+        specifier: ^3.4.2
+        version: 3.4.2
+    devDependencies:
+      '@escral/lint':
+        specifier: ^2.0.10
+        version: 2.0.11(jiti@2.6.1)(vue@3.5.22(typescript@5.9.3))
+      '@escral/tsconfig':
+        specifier: ^0.2.1
+        version: 0.2.1
+      '@escral/versioning':
+        specifier: ^1.5
+        version: 1.5.0
+      tsdown:
+        specifier: ^0.15.9
+        version: 0.15.12(typescript@5.9.3)
+      vitest:
+        specifier: ^4.0.1
+        version: 4.0.6(@types/node@22.19.0)(jiti@2.6.1)(yaml@2.8.1)
+
+  packages/flow:
+    dependencies:
+      '@flowtorio/cli':
+        specifier: workspace:*
+        version: link:../cli
+      '@flowtorio/tui-terminal-kit':
+        specifier: workspace:*
+        version: link:../tui-terminal-kit
       '@vue/reactivity':
         specifier: ^3.5.22
         version: 3.5.22
@@ -44,9 +81,6 @@ importers:
       consola:
         specifier: ^3.4.2
         version: 3.4.2
-      defu:
-        specifier: ^6.1.4
-        version: 6.1.4
       jira.js:
         specifier: ^5.2.2
         version: 5.2.2
@@ -57,21 +91,34 @@ importers:
       '@escral/tsconfig':
         specifier: ^0.2.1
         version: 0.2.1
-      '@escral/versioning':
-        specifier: ^1.5
-        version: 1.5.0
       '@types/terminal-kit':
         specifier: ^2.5.7
         version: 2.5.7
-      terminal-kit:
-        specifier: ^3.1.2
-        version: 3.1.2
       tsdown:
         specifier: ^0.15.9
         version: 0.15.12(typescript@5.9.3)
-      vitest:
-        specifier: ^4.0.1
-        version: 4.0.6(@types/node@22.19.0)(jiti@2.6.1)(yaml@2.8.1)
+
+  packages/tui-terminal-kit:
+    dependencies:
+      '@vue/reactivity':
+        specifier: ^3.5.22
+        version: 3.5.22
+      terminal-kit:
+        specifier: ^3.1.2
+        version: 3.1.2
+    devDependencies:
+      '@escral/lint':
+        specifier: ^2.0.10
+        version: 2.0.11(jiti@2.6.1)(vue@3.5.22(typescript@5.9.3))
+      '@escral/tsconfig':
+        specifier: ^0.2.1
+        version: 0.2.1
+      '@types/terminal-kit':
+        specifier: ^2.5.7
+        version: 2.5.7
+      tsdown:
+        specifier: ^0.15.9
+        version: 0.15.12(typescript@5.9.3)
 
 packages:
 

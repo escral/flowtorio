@@ -6,9 +6,6 @@
         "url": "git+https://github.com/escral/flowtorio.git",
         "directory": "packages/cli"
     },
-    "bin": {
-        "flow": "./dist/cli.mjs"
-    },
     "license": "MIT",
     "type": "module",
     "main": "./dist/index.js",
@@ -28,23 +25,18 @@
         "dev": "tsdown --watch",
         "test": "vitest",
         "test:types": "vitest --typecheck.only",
-        "typecheck": "tsc --noEmit",
-        "flow": "bun ./src/bin/flow.ts"
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
+        "@flowtorio/tui-terminal-kit": "workspace:*",
         "@vue/reactivity": "^3.5.22",
-        "c12": "^3.3.1",
         "citty": "^0.1.6",
-        "consola": "^3.4.2",
-        "defu": "^6.1.4",
-        "jira.js": "^5.2.2"
+        "consola": "^3.4.2"
     },
     "devDependencies": {
         "@escral/lint": "^2.0.10",
         "@escral/tsconfig": "^0.2.1",
         "@escral/versioning": "^1.5",
-        "@types/terminal-kit": "^2.5.7",
-        "terminal-kit": "^3.1.2",
         "tsdown": "^0.15.9",
         "vitest": "^4.0.1"
     },

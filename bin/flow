@@ -1,4 +1,4 @@
 #!/bin/bash
 
-exec bun ./packages/cli/src/bin/flow.ts
+exec bun ./packages/flow/src/index.ts
 
