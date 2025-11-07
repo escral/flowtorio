@@ -1,5 +1,5 @@
-import { computed, watch, type ComputedRef } from '@vue/reactivity'
-import type { LayoutBlock, BlockDimensions } from '../types/LayoutBlock'
+import { computed, watch } from '@vue/reactivity'
+import type { LayoutBlock } from '../types/LayoutBlock'
 import type { Renderer } from '../types/Renderer'
 import { useTerminal } from './useTerminal'
 import { BlockRenderer } from '../core/BlockRenderer'
@@ -13,25 +13,6 @@ export interface UseBlockOptions {
 /**
  * Render to a specific LayoutBlock
  */
-export function useBlock<TData>(
-    block: LayoutBlock,
-    renderer: Renderer<TData>,
-    options?: UseBlockOptions,
-): {
-    render: (data: TData) => void
-    dimensions: ComputedRef<BlockDimensions>
-    markDirty: () => void
-}
-export function useBlock<TData>(
-    block: LayoutBlock,
-    renderer: Renderer<TData>,
-    dataResolver: () => TData,
-    options?: UseBlockOptions,
-): {
-    render: (data?: TData) => void
-    dimensions: ComputedRef<BlockDimensions>
-    markDirty: () => void
-}
 export function useBlock<TData>(
     block: LayoutBlock,
     renderer: Renderer<TData>,

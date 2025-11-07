@@ -1,8 +1,9 @@
+import { defineCommand, useCommands, useLogger, useNotifications } from '@flowtorio/cli'
+import { FlowHeaderRenderer, JiraIssuesRenderer } from '~/renderers'
 import { ref, watch } from '@vue/reactivity'
 import {
     type AppContext,
     InputMode,
-    type StatusBarData,
     StatusBarRenderer,
     useApp,
     useBlock,
@@ -11,8 +12,6 @@ import {
     useLayout,
     useTerminal,
 } from '@flowtorio/tui-terminal-kit'
-import { defineCommand, useCommands, useLogger, useNotifications } from '@flowtorio/cli'
-import { JiraIssuesRenderer, FlowHeaderRenderer } from '~/renderers'
 
 /**
  * Main Flow application
@@ -34,10 +33,11 @@ function setupFlowApp(app: AppContext) {
     // Get terminal from composable
     const { terminal } = useTerminal()
 
+    // @todo Rerender layout blocks on terminal resize
+    // @todo Handle block add/remove dynamically
+    // @todo Change block dimensions on terminal resize
     // Calculate dimensions (reactive to terminal size)
     const createBlocks = () => {
-        layout.blocks.value = [] // Clear existing blocks
-
         const headerBlock = layout.addBlock({
             id: 'header',
             x: 1,
