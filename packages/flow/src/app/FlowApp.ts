@@ -26,10 +26,7 @@ export function createFlowApp() {
  */
 function setupFlowApp(app: AppContext) {
     const layout = useLayout()
-    const {
-        mode,
-        setMode,
-    } = useInputMode()
+    const { mode } = useInputMode()
     const commands = useCommands()
     const logger = useLogger()
     const notifications = useNotifications()
