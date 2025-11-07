@@ -42,4 +42,3 @@ const main = defineCommand({
 // Run the CLI
 // noinspection JSIgnoredPromiseFromCall
 runMain(main)
-

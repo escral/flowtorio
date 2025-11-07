@@ -22,6 +22,7 @@ export function createFlowApp() {
 
 /**
  * Setup Flow application logic
+ * @todo Implement different views
  */
 function setupFlowApp(app: AppContext) {
     const layout = useLayout()
@@ -144,6 +145,8 @@ function setupFlowApp(app: AppContext) {
     })
 
     // Register commands
+    // @todo Use citty command definitions
+    // @todo Add command that renders all available commands using citty renderer
     commands.register('reload', defineCommand({
         meta: {
             name: 'reload',
@@ -170,7 +173,6 @@ function setupFlowApp(app: AppContext) {
         },
         async run({ args }) {
             logger.log(`Searching: ${args.id}`)
-            // TODO: Implement issue opening logic
             app.render()
         },
     }))

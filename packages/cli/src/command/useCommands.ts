@@ -1,6 +1,7 @@
 import { ref, type Ref } from '@vue/reactivity'
 import { runCommand, type CommandDef } from 'citty'
 
+// @todo Use shallow ref
 export interface UseCommandsReturn {
     commands: Ref<Record<string, CommandDef>>
     register: (name: string, command: CommandDef) => void
