@@ -3,12 +3,12 @@ import { FlowHeaderRenderer, JiraIssuesRenderer } from '~/renderers'
 import { ref, watch } from '@vue/reactivity'
 import {
     type AppContext,
-    InputMode,
+    InputMode, // @todo Move to cli package
     StatusBarRenderer,
     useApp,
-    useBlock,
-    useInputMode,
-    useKeybindings,
+    useBlock, // @todo Rename to something better
+    useInputMode, // @todo Move to cli package
+    useKeybindings, // @todo Move to cli package
     useLayout,
     useTerminal,
 } from '@flowtorio/tui-terminal-kit'
