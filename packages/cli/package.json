@@ -26,8 +26,6 @@
         "release": "pnpm build && pnpm new-version -s && npm publish --access public",
         "build": "tsdown",
         "dev": "tsdown --watch",
-        "test": "vitest",
-        "test:types": "vitest --typecheck.only",
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
@@ -40,8 +38,7 @@
         "@escral/lint": "^2.0.10",
         "@escral/tsconfig": "^0.2.1",
         "@escral/versioning": "^1.5",
-        "tsdown": "^0.15.9",
-        "vitest": "^4.0.1"
+        "tsdown": "^0.15.9"
     },
     "engines": {
         "node": ">=18.0"

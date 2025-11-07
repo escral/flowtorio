@@ -29,6 +29,8 @@ export interface LayoutBlockConfig {
     y: number
     width: number
     height: number
+    paddingX?: number
+    paddingY?: number
     hasBorder?: boolean
     title?: string
     zIndex?: number
@@ -44,6 +46,8 @@ export class LayoutBlock {
     public width: number
     public height: number
     public hasBorder: boolean
+    public paddingX: number = 0
+    public paddingY: number = 0
     public title?: string
     public zIndex: number
     public isDirty: boolean
@@ -55,6 +59,8 @@ export class LayoutBlock {
         this.width = config.width
         this.height = config.height
         this.hasBorder = config.hasBorder ?? false
+        this.paddingX = config.hasBorder ? 1 : 0
+        this.paddingY = 0
         this.title = config.title
         this.zIndex = config.zIndex ?? 0
         this.isDirty = true // Start as dirty to ensure initial render
@@ -65,15 +71,15 @@ export class LayoutBlock {
      */
     public getDimensions(): BlockDimensions {
         const borderSize = this.hasBorder ? 1 : 0
-        const borderPadding = borderSize * 2
+        const borderPadding = borderSize * 2 + this.paddingX * 2
 
         return {
             x: this.x,
             y: this.y,
             width: this.width,
             height: this.height,
-            contentX: this.x + borderSize,
-            contentY: this.y + borderSize,
+            contentX: this.x + borderSize + this.paddingX,
+            contentY: this.y + borderSize + this.paddingY,
             contentWidth: Math.max(0, this.width - borderPadding),
             contentHeight: Math.max(0, this.height - borderPadding),
         }

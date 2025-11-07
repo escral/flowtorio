@@ -19,6 +19,7 @@ export interface UseLoggerReturn {
 
 /**
  * Reactive logger
+ * @todo Auto cleanup old logs after a certain limit
  */
 export function useLogger(): UseLoggerReturn {
     const logs = ref<LogEntry[]>([])

@@ -1,5 +1,6 @@
 import type { Terminal } from 'terminal-kit'
 import type { Renderer, BlockDimensions } from '@flowtorio/tui-terminal-kit'
+import { eraseBlockArea } from '@flowtorio/tui-terminal-kit'
 
 export interface FlowHeaderData {
     title: string
@@ -18,8 +19,8 @@ export class FlowHeaderRenderer implements Renderer<FlowHeaderData> {
             contentWidth,
         } = dimensions
 
+        eraseBlockArea(terminal, dimensions)
         terminal.moveTo(contentX, contentY)
-        terminal.eraseLine()
 
         // Title
         terminal.bold.cyan(data.title)

@@ -2,6 +2,7 @@ import type { Terminal } from 'terminal-kit'
 import type { Renderer } from '../types/Renderer'
 import type { BlockDimensions } from '../types/LayoutBlock'
 import { InputMode } from '../types/InputMode'
+import {eraseBlockArea} from "../utils";
 
 export interface Notification {
     message: string
@@ -25,8 +26,8 @@ export class StatusBarRenderer implements Renderer<StatusBarData> {
             contentWidth,
         } = dimensions
 
+        eraseBlockArea(terminal, dimensions)
         terminal.moveTo(contentX, contentY)
-        terminal.eraseLine()
 
         // Render mode indicator
         this.renderModeIndicator(terminal, data.mode)
@@ -53,13 +54,13 @@ export class StatusBarRenderer implements Renderer<StatusBarData> {
             // No indicator in normal mode
             break
         case InputMode.Command:
-            terminal.bold.bgGreen.black(' COMMAND ')
+            terminal.bold.bgGreen(' COMMAND ')
             break
         case InputMode.Insert:
-            terminal.bold.bgBlue.white(' INSERT ')
+            terminal.bold.bgBlue(' INSERT ')
             break
         case InputMode.Select:
-            terminal.bold.bgCyan.black(' SELECT ')
+            terminal.bold.bgCyan(' SELECT ')
             break
         }
 
