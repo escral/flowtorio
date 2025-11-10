@@ -1,4 +1,4 @@
-import { ref, type Ref } from '@vue/reactivity'
+import { shallowReactive } from '@vue/reactivity'
 
 export interface LogEntry {
     level: 'log' | 'error' | 'warn' | 'info'
@@ -7,8 +7,12 @@ export interface LogEntry {
     args: any[]
 }
 
+export interface UseLoggerOptions {
+    maxLogs?: number
+}
+
 export interface UseLoggerReturn {
-    logs: Ref<LogEntry[]>
+    logs: LogEntry[]
     log: (...args: any[]) => void
     error: (...args: any[]) => void
     warn: (...args: any[]) => void
@@ -19,19 +23,24 @@ export interface UseLoggerReturn {
 
 /**
  * Reactive logger
- * @todo Auto cleanup old logs after a certain limit
  */
-export function useLogger(): UseLoggerReturn {
-    const logs = ref<LogEntry[]>([])
+export function useLogger(options: UseLoggerOptions = {}): UseLoggerReturn {
+    const { maxLogs = 1000 } = options
+    const logs = shallowReactive<LogEntry[]>([])
 
     const addLog = (level: LogEntry['level'], ...args: any[]) => {
         const message = args.map(arg => String(arg)).join(' ')
-        logs.value.push({
+        logs.push({
             level,
             message,
             timestamp: new Date(),
             args,
         })
+
+        // Auto cleanup old logs when limit is exceeded
+        if (logs.length > maxLogs) {
+            logs.splice(0, logs.length - maxLogs)
+        }
     }
 
     const log = (...args: any[]) => addLog('log', ...args)
@@ -40,11 +49,11 @@ export function useLogger(): UseLoggerReturn {
     const info = (...args: any[]) => addLog('info', ...args)
 
     const clear = () => {
-        logs.value = []
+        logs.length = 0
     }
 
     const latest = () => {
-        return logs.value[logs.value.length - 1]
+        return logs[logs.length - 1]
     }
 
     return {
