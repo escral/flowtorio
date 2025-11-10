@@ -10,7 +10,9 @@
     "author": "Alexander Topalo <topaloalexander@gmail.com>",
     "scripts": {
         "build": "pnpm -r -F packages/* run build",
-        "dev": "pnpm -F @flowtorio/cli dev",
+        "dev": "pnpm -r --parallel -F \"./packages/*\" run dev",
+        "dev:libs": "pnpm -r --parallel -F @flowtorio/tui-terminal-kit -F @flowtorio/cli run dev",
+        "dev:flow": "pnpm -F @flowtorio/flow dev",
         "test": "pnpm -r -F packages/* run test",
         "lint": "pnpm eslint --ext .ts,.vue,.js .",
         "release": "pnpm -r -F packages/* run release",
