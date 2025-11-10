@@ -1,6 +1,6 @@
 import { watch } from '@vue/reactivity'
 import { useTerminal, disposeTerminal } from './useTerminal'
-import { setupGlobalKeyListener } from './useKeybindings'
+import { useKeybindingsStore } from '../store/useKeybindingsStore'
 import { useInputMode } from './useInputMode'
 import { InputMode } from '../types/InputMode'
 import * as process from 'node:process'
@@ -90,7 +90,8 @@ export function useApp(
      */
     const run = () => {
         // Setup key listener
-        cleanupKeyListener = setupGlobalKeyListener()
+        const store = useKeybindingsStore()
+        cleanupKeyListener = store.setupGlobalKeyListener()
 
         // @todo Extract mode switching to its own composable
         // Setup mode switching keys (can be overridden by user)

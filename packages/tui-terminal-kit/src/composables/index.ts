@@ -3,5 +3,6 @@ export * from './useLayout'
 export * from './useLayoutBlockRender'
 export * from './useInputMode'
 export * from './useKeybindings'
+export * from './useModeKeybindings'
 export * from './useApp'
 

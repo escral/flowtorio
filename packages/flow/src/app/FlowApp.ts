@@ -9,6 +9,7 @@ import {
     useLayoutBlockRender,
     useInputMode, // @todo Move to cli package
     useKeybindings, // @todo Move to cli package
+    useModeKeybindings, // @todo Move to cli package
     useLayout,
     useTerminal,
 } from '@flowtorio/tui-terminal-kit'
@@ -125,14 +126,14 @@ function setupFlowApp(app: AppContext) {
         content.render()
     })
 
-    terminal.on('key', (name: string) => { // @todo useKeybindings and useModeKeybindings
-        if (name === 'CTRL_C' || name === 'CTRL_D') {
-            app.exit()
-        }
+    // Setup global keybindings (work in any mode)
+    useKeybindings({
+        CTRL_C: () => app.exit(),
+        CTRL_D: () => app.exit(),
     })
 
     // Setup keybindings for Normal mode
-    useKeybindings(InputMode.Normal, {
+    useModeKeybindings(InputMode.Normal, {
         q: () => app.exit(),
         r: async () => {
             logger.log('Reloading issues...')
