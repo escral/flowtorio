@@ -29,7 +29,6 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@flowtorio/tui-terminal-kit": "workspace:*",
         "@vue/reactivity": "^3.5.22",
         "citty": "^0.1.6",
         "consola": "^3.4.2"
