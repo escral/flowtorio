@@ -1,9 +1,8 @@
-import { ref, type Ref } from '@vue/reactivity'
+import { shallowReactive } from '@vue/reactivity'
 import { runCommand, type CommandDef } from 'citty'
 
-// @todo Use shallow ref
 export interface UseCommandsReturn {
-    commands: Ref<Record<string, CommandDef>>
+    commands: Record<string, CommandDef>
     register: (name: string, command: CommandDef) => void
     unregister: (name: string) => void
     execute: (commandString: string) => Promise<void>
@@ -14,14 +13,14 @@ export interface UseCommandsReturn {
  * Register and execute citty commands from Command mode
  */
 export function useCommands(): UseCommandsReturn {
-    const commands = ref<Record<string, CommandDef>>({})
+    const commands = shallowReactive<Record<string, CommandDef>>({})
 
     const register = (name: string, command: CommandDef) => {
-        commands.value[name] = command
+        commands[name] = command
     }
 
     const unregister = (name: string) => {
-        delete commands.value[name]
+        delete commands[name]
     }
 
     const execute = async (commandString: string) => {
@@ -29,7 +28,7 @@ export function useCommands(): UseCommandsReturn {
         const commandName = parts[0]
         const args = parts.slice(1)
 
-        const command = commands.value[commandName]
+        const command = commands[commandName]
 
         if (!command) {
             throw new Error(`Command not found: ${commandName}`)
@@ -42,7 +41,7 @@ export function useCommands(): UseCommandsReturn {
     }
 
     const getCommands = () => {
-        return { ...commands.value }
+        return { ...commands }
     }
 
     return {
