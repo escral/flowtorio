@@ -3,12 +3,13 @@
 import { defineCommand, runMain } from 'citty'
 import { loadFlowConfig, setConfig } from './config'
 import { createFlowApp } from './app/FlowApp'
+import packageInfo from '../package.json' assert { type: 'json' }
 
 const main = defineCommand({
     meta: {
         name: 'flow',
-        version: '0.0.0', // @todo Replace with dynamic version from package.json
-        description: 'Flowtorio - Terminal control center for developer tools', // @todo Get from package.json
+        version: packageInfo.version,
+        description: packageInfo.description,
     },
     args: {
         version: {

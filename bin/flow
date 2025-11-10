@@ -4,5 +4,5 @@
 # This makes Bun resolve TypeScript source files instead of built dist files
 export NODE_ENV=development
 
-exec bun --conditions=development ./packages/flow/src/index.ts
+exec bun --conditions=development ./packages/flow/src/index.ts $@
 

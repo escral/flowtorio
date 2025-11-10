@@ -1,5 +1,6 @@
 {
     "name": "@flowtorio/flow",
+    "description": "Flowtorio - Terminal control center for developer tools",
     "version": "0.0.0",
     "repository": {
         "type": "git",
