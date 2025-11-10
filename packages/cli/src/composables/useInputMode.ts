@@ -1,8 +1,26 @@
 import { ref, type Ref } from '@vue/reactivity'
-import { InputMode, type InputModeConfig } from '../types/InputMode'
+
+/**
+ * Input modes (vim-like)
+ */
+export enum InputMode {
+    Normal = 'normal',
+    Command = 'command',
+    Insert = 'insert',
+    Select = 'select',
+}
+
+/**
+ * Configuration for input mode behavior
+ */
+export interface InputModeConfig {
+    mode?: InputMode
+    keybindings?: Record<string, () => void>
+    onEscape?: () => void
+}
 
 // Singleton state
-let modeInstance: Ref<InputMode> | null = null
+let modeInstance: Ref<InputMode> | undefined = undefined
 
 /**
  * Manage vim-like input modes
@@ -26,4 +44,3 @@ export function useInputMode(config?: InputModeConfig): {
         setMode,
     }
 }
-
