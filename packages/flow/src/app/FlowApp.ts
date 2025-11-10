@@ -1,13 +1,11 @@
-import { defineCommand, useCommands, useLogger, useNotifications } from '@flowtorio/cli'
+import { defineCommand, useCommands, useLogger, useNotifications, InputMode, useInputMode } from '@flowtorio/cli'
 import { FlowHeaderRenderer, JiraIssuesRenderer } from '~/renderers'
 import { ref, watch } from '@vue/reactivity'
 import {
     type AppContext,
-    InputMode, // @todo Move to cli package
     StatusBarRenderer,
     useApp,
     useLayoutBlockRender,
-    useInputMode, // @todo Move to cli package
     useKeybindings, // @todo Move to cli package
     useModeKeybindings, // @todo Move to cli package
     useLayout,

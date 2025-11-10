@@ -1,4 +1,4 @@
-import type { InputMode } from '../types/InputMode'
+import type { InputMode } from '@flowtorio/cli'
 import { useKeybindingsStore, type KeyHandler, type Unsubscribe } from '../store/useKeybindingsStore'
 
 /**

@@ -1,8 +1,7 @@
 import { watch } from '@vue/reactivity'
 import { useTerminal, disposeTerminal } from './useTerminal'
 import { useKeybindingsStore } from '../store/useKeybindingsStore'
-import { useInputMode } from './useInputMode'
-import { InputMode } from '../types/InputMode'
+import { useInputMode, InputMode } from '@flowtorio/cli'
 import * as process from 'node:process'
 
 /**

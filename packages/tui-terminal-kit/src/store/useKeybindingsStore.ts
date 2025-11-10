@@ -1,6 +1,6 @@
-import type { InputMode } from '../types/InputMode'
+import type { InputMode } from '@flowtorio/cli'
 import { useTerminal } from '../composables/useTerminal'
-import { useInputMode } from '../composables/useInputMode'
+import { useInputMode } from '@flowtorio/cli'
 
 export type KeyHandler = () => void
 export type Unsubscribe = () => void

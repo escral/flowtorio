@@ -1,7 +1,7 @@
 import type { Terminal } from 'terminal-kit'
 import type { Renderer } from '../types/Renderer'
 import type { BlockDimensions } from '../types/LayoutBlock'
-import { InputMode } from '../types/InputMode'
+import { InputMode } from '@flowtorio/cli'
 import {eraseBlockArea} from "../utils";
 
 export interface Notification {
