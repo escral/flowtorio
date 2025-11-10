@@ -13,7 +13,7 @@ export interface UseBlockOptions {
 /**
  * Render to a specific LayoutBlock
  */
-export function useBlock<TData>(
+export function useLayoutBlockRender<TData>(
     block: LayoutBlock,
     renderer: Renderer<TData>,
     dataResolver?: () => TData,

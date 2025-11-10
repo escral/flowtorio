@@ -6,7 +6,7 @@ import {
     InputMode, // @todo Move to cli package
     StatusBarRenderer,
     useApp,
-    useBlock, // @todo Rename to something better
+    useLayoutBlockRender,
     useInputMode, // @todo Move to cli package
     useKeybindings, // @todo Move to cli package
     useLayout,
@@ -98,19 +98,19 @@ function setupFlowApp(app: AppContext) {
     })
 
     // Setup blocks with renderers
-    const header = useBlock(headerBlock, new FlowHeaderRenderer(), () => ({
+    const header = useLayoutBlockRender(headerBlock, new FlowHeaderRenderer(), () => ({
         title: 'Flowtorio',
         subtitle: 'Flow Control Center',
         context: `Issues: ${jiraIssues.data.value?.length || 0}`,
     }), { reactive: true })
 
-    const footer = useBlock(footerBlock, new StatusBarRenderer(), () => ({
+    const footer = useLayoutBlockRender(footerBlock, new StatusBarRenderer(), () => ({
         mode: mode.value,
         message: logger.latest()?.message,
         notification: notifications.notifications.value.at(-1),
     }), { reactive: true })
 
-    const content = useBlock(contentBlock, new JiraIssuesRenderer(), () => {
+    const content = useLayoutBlockRender(contentBlock, new JiraIssuesRenderer(), () => {
         return {
             issues: jiraIssues.data.value || [],
             loading: jiraIssues.loading.value,
