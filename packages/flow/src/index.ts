@@ -18,9 +18,9 @@ const main = defineCommand({
             description: 'Show version',
         },
     },
-    async run({ args }) {
+    async run({ args, cmd }) {
         if (args.version) {
-            console.log('flow v0.0.0') // @todo Replace with dynamic version from package.json
+            console.log(`flow ${(cmd.meta as any).version}`)
 
             return
         }
