@@ -1,8 +1,8 @@
 import { watch } from '@vue/reactivity'
-import { useTerminal, disposeTerminal } from './useTerminal'
-import { useKeybindingsStore } from '../store/useKeybindingsStore'
-import { useInputMode, InputMode } from '@flowtorio/cli'
+import { disposeTerminal, useTerminal } from './useTerminal'
+import { useKeybindingsStore } from '@flowtorio/cli'
 import * as process from 'node:process'
+import { createTerminalInputSource } from '../input/TerminalInputSource'
 
 /**
  * CLI Application interface
@@ -40,15 +40,7 @@ export function useApp(
         height,
     } = useTerminal()
 
-    const {
-        mode,
-        setMode,
-    } = useInputMode()
-
     const renderCallbacks: RenderCallback[] = []
-
-    // Setup global key listener
-    let cleanupKeyListener: (() => void) | null = null
 
     // Auto-render on terminal resize
     watch([width, height], () => {
@@ -84,42 +76,21 @@ export function useApp(
         terminal.styleReset()
     }
 
+    // Keybindings
+    const keybindingsStore = useKeybindingsStore()
+
     /**
      * Run the application
      */
     const run = () => {
-        // Setup key listener
-        const store = useKeybindingsStore()
-        cleanupKeyListener = store.setupGlobalKeyListener()
-
-        // @todo Extract mode switching to its own composable
-        // Setup mode switching keys (can be overridden by user)
-        terminal.on('key', (eventName: string) => {
-            if (mode.value === InputMode.Normal) {
-                // Default mode switching keys
-                if (eventName === '/') {
-                    setMode(InputMode.Command)
-                } else if (eventName === 'i') {
-                    setMode(InputMode.Insert)
-                } else if (eventName === 'f') {
-                    setMode(InputMode.Select)
-                }
-            } else {
-                // ESC returns to Normal mode from any other mode
-                if (eventName === 'ESCAPE') {
-                    setMode(InputMode.Normal)
-                }
-            }
-        })
+        keybindingsStore.initializeKeybindings(createTerminalInputSource())
 
         // Initial render
         render()
     }
 
     const cleanup = () => {
-        if (cleanupKeyListener) {
-            cleanupKeyListener()
-        }
+        keybindingsStore.resetKeybindings()
 
         if (options.onExit) {
             options.onExit()

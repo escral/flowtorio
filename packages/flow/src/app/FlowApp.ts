@@ -1,14 +1,21 @@
-import { defineCommand, useCommands, useLogger, useNotifications, InputMode, useInputMode } from '@flowtorio/cli'
+import {
+    defineCommand,
+    InputMode,
+    useCommands,
+    useInputMode,
+    useKeybindings,
+    useLogger,
+    useModeKeybindings,
+    useNotifications,
+} from '@flowtorio/cli'
 import { FlowHeaderRenderer, JiraIssuesRenderer } from '~/renderers'
 import { ref, watch } from '@vue/reactivity'
 import {
     type AppContext,
     StatusBarRenderer,
     useApp,
-    useLayoutBlockRender,
-    useKeybindings, // @todo Move to cli package
-    useModeKeybindings, // @todo Move to cli package
     useLayout,
+    useLayoutBlockRender,
     useTerminal,
 } from '@flowtorio/tui-terminal-kit'
 
@@ -25,10 +32,22 @@ export function createFlowApp() {
  */
 function setupFlowApp(app: AppContext) {
     const layout = useLayout()
-    const { mode } = useInputMode()
     const commands = useCommands()
     const logger = useLogger()
     const notifications = useNotifications()
+
+    // Input mode
+    const { mode, setMode } = useInputMode()
+
+    useModeKeybindings(InputMode.Normal, {
+        '/': () => setMode(InputMode.Command),
+        'i': () => setMode(InputMode.Insert),
+        'f': () => setMode(InputMode.Select),
+    })
+
+    useModeKeybindings(InputMode.Command, { ESCAPE: () => setMode(InputMode.Normal) })
+    useModeKeybindings(InputMode.Insert, { ESCAPE: () => setMode(InputMode.Normal) })
+    useModeKeybindings(InputMode.Select, { ESCAPE: () => setMode(InputMode.Normal) })
 
     // Get terminal from composable
     const { terminal } = useTerminal()
