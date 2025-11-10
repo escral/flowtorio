@@ -1,4 +1,4 @@
-import { ref, watch, type Ref } from '@vue/reactivity'
+import { ref, type Ref } from '@vue/reactivity'
 import { InputMode, type InputModeConfig } from '../types/InputMode'
 
 // Singleton state
