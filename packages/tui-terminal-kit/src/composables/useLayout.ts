@@ -1,9 +1,7 @@
 import { watch } from '@vue/reactivity'
 import { LayoutManager } from '../core/LayoutManager'
-import type { LayoutBlock } from '../types/LayoutBlock'
 import { type LayoutBlockConfig } from '../types/LayoutBlock'
 import { useTerminal } from './useTerminal'
-import type { Terminal } from 'terminal-kit'
 
 // Singleton instance
 let layoutManagerInstance: LayoutManager | null = null
