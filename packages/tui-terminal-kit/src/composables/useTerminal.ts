@@ -1,4 +1,4 @@
-import { computed, type ComputedRef, type Ref } from '@vue/reactivity'
+import { type Ref } from '@vue/reactivity'
 import type { Terminal as TerminalType } from 'terminal-kit'
 import { Terminal } from '../core/Terminal'
 import { Screen } from '../core/Screen'
@@ -28,28 +28,6 @@ export function useTerminal(): {
         width: screenInstance.width,
         height: screenInstance.height,
         terminal: terminalInstance.getInstance(),
-    }
-}
-
-/**
- * Get the raw terminal and screen instances
- */
-export function getTerminalCore(): {
-    terminal: Terminal
-    screen: Screen
-    } {
-    if (!terminalInstance) {
-        terminalInstance = new Terminal()
-        terminalInstance.initialize()
-    }
-
-    if (!screenInstance) {
-        screenInstance = new Screen(terminalInstance)
-    }
-
-    return {
-        terminal: terminalInstance,
-        screen: screenInstance,
     }
 }
 
