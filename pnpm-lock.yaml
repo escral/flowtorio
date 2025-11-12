@@ -30,7 +30,7 @@ importers:
         specifier: ^4.0.1
         version: 4.0.6(@types/node@22.19.0)(jiti@2.6.1)(yaml@2.8.1)
 
-  packages/cli:
+  packages/core:
     dependencies:
       '@vue/reactivity':
         specifier: ^3.5.22
@@ -57,9 +57,9 @@ importers:
 
   packages/flow:
     dependencies:
-      '@flowtorio/cli':
+      '@flowtorio/core':
         specifier: workspace:*
-        version: link:../cli
+        version: link:../core
       '@flowtorio/tui-terminal-kit':
         specifier: workspace:*
         version: link:../tui-terminal-kit
@@ -97,9 +97,9 @@ importers:
 
   packages/tui-terminal-kit:
     dependencies:
-      '@flowtorio/cli':
+      '@flowtorio/core':
         specifier: workspace:*
-        version: link:../cli
+        version: link:../core
       '@vue/reactivity':
         specifier: ^3.5.22
         version: 3.5.22

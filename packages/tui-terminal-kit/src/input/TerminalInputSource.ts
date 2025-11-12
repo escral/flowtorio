@@ -1,4 +1,4 @@
-import type { KeyInputSource } from '@flowtorio/cli'
+import type { KeyInputSource } from '@flowtorio/core'
 import { useTerminal } from '../composables/useTerminal'
 
 /**

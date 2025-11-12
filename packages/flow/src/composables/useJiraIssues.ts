@@ -1,4 +1,4 @@
-import { useAsyncData, type UseAsyncDataReturn } from '@flowtorio/cli'
+import { useAsyncData, type UseAsyncDataReturn } from '@flowtorio/core'
 import { useJira } from './useJira'
 
 export interface JiraIssue {

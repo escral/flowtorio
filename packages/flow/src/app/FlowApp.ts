@@ -7,7 +7,7 @@ import {
     useLogger,
     useModeKeybindings,
     useNotifications,
-} from '@flowtorio/cli'
+} from '@flowtorio/core'
 import { FlowHeaderRenderer, JiraIssuesRenderer } from '~/renderers'
 import { ref, watch } from '@vue/reactivity'
 import {
