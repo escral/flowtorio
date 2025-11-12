@@ -9,7 +9,7 @@ import {
     useNotifications,
 } from '@flowtorio/core'
 import { FlowHeaderRenderer, JiraIssuesRenderer } from '~/renderers'
-import { ref, watch } from '@vue/reactivity'
+import { watch } from '@vue/reactivity'
 import {
     type AppContext,
     StatusBarRenderer,
@@ -18,6 +18,7 @@ import {
     useLayoutBlockRender,
     useTerminal,
 } from '@flowtorio/tui-terminal-kit'
+import { useJiraIssues } from '~/composables'
 
 /**
  * Main Flow application
@@ -30,7 +31,7 @@ export function createFlowApp() {
  * Setup Flow application logic
  * @todo Implement different views
  */
-function setupFlowApp(app: AppContext) {
+async function setupFlowApp(app: AppContext) {
     const layout = useLayout()
     const commands = useCommands()
     const logger = useLogger()
@@ -98,14 +99,22 @@ function setupFlowApp(app: AppContext) {
     } = createBlocks()
 
     // Jira data
-    const jiraIssues = {
-        data: ref([]),
-        loading: ref(false),
-        error: ref<Error | null>(null),
-        async refresh() {
-            await new Promise((resolve) => setTimeout(resolve, 500)) // Simulate delay
-        },
-    }
+    // const jiraIssues = {
+    //     data: ref([]),
+    //     loading: ref(false),
+    //     error: ref<Error | null>(null),
+    //     async refresh() {
+    //         await new Promise((resolve) => setTimeout(resolve, 500)) // Simulate delay
+    //     },
+    // }
+
+    const jiraIssues = await useJiraIssues({
+        jql: `type in subTaskIssueTypes()
+  and assignee = currentUser()
+  and status != Done and status != "Don't Need"
+  and sprint in openSprints()
+  ORDER BY project, parent, updated DESC`,
+    })
 
     // Watch for errors
     watch(jiraIssues.error, (error) => {

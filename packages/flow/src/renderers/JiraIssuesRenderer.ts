@@ -1,5 +1,5 @@
 import type { Terminal } from 'terminal-kit'
-import type { Renderer, BlockDimensions } from '@flowtorio/tui-terminal-kit'
+import type { BlockDimensions, Renderer } from '@flowtorio/tui-terminal-kit'
 import type { JiraIssue } from '../composables/useJiraIssues'
 
 export interface JiraIssuesData {

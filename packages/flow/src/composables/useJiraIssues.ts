@@ -33,13 +33,13 @@ export interface JiraSearchOptions {
  */
 export function useJiraIssues(
     options: JiraSearchOptions,
-): UseAsyncDataReturn<JiraIssue[]> {
+): Promise<UseAsyncDataReturn<JiraIssue[]>> {
     const client = useJira()
 
     return useAsyncData<JiraIssue[]>(
         `jira-issues-${options.jql}`,
         async () => {
-            const result = await client.issueSearch.searchForIssuesUsingJql({
+            const result = await client.issueSearch.searchForIssuesUsingJqlEnhancedSearch({
                 jql: options.jql,
                 maxResults: options.maxResults ?? 50,
                 fields: options.fields ?? ['summary', 'status', 'parent'],

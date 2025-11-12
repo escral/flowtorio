@@ -6,28 +6,28 @@ export interface AsyncDataOptions {
 }
 
 export interface UseAsyncDataReturn<T> {
-    data: Ref<T | null>
+    data: Ref<T | undefined>
     loading: Ref<boolean>
-    error: Ref<Error | null>
+    error: Ref<Error | undefined>
     refresh: () => Promise<void>
-    execute: () => Promise<void>
+    fetch: () => Promise<void>
 }
 
 /**
  * Generic async data fetching with loading/error states (like Nuxt's useAsyncData)
  */
-export function useAsyncData<T>(
+export async function useAsyncData<T>(
     key: string,
     fetcher: () => Promise<T>,
     options: AsyncDataOptions = {},
-): UseAsyncDataReturn<T> {
-    const data = ref<T | null>(null)
+): Promise<UseAsyncDataReturn<T>> {
+    const data = ref<T>()
     const loading = ref(false)
-    const error = ref<Error | null>(null)
+    const error = ref<Error>()
 
-    const execute = async () => {
+    const fetch = async () => {
         loading.value = true
-        error.value = null
+        error.value = undefined
 
         try {
             const result = await fetcher()
@@ -44,20 +44,20 @@ export function useAsyncData<T>(
     }
 
     const refresh = async () => {
-        await execute()
+        await fetch()
     }
 
     // Execute immediately if specified
     if (options.immediate !== false) {
-        execute()
+        await fetch()
     }
 
     return {
-        data: data as Ref<T | null>,
+        data: data as Ref<T | undefined>,
         loading,
         error,
         refresh,
-        execute,
+        fetch,
     }
 }
 
