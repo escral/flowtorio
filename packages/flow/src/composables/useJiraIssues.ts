@@ -1,5 +1,6 @@
-import { useAsyncData, type UseAsyncDataReturn } from '@flowtorio/core'
+import { useAsyncData, type UseAsyncDataReturn, useLogger } from '@flowtorio/core'
 import { useJira } from './useJira'
+import { useCache } from '~/composables/useCache'
 
 export interface JiraIssue {
     id: string
@@ -36,13 +37,18 @@ export function useJiraIssues(
 ): UseAsyncDataReturn<JiraIssue[]> {
     const client = useJira()
 
+    const key = `jira-issues-${options.jql}`
+
     return useAsyncData<JiraIssue[]>(
         `jira-issues-${options.jql}`,
         async () => {
-            const result = await client.issueSearch.searchForIssuesUsingJqlEnhancedSearch({
-                jql: options.jql,
-                maxResults: options.maxResults ?? 50,
-                fields: options.fields ?? ['summary', 'status', 'parent'],
+            // @todo Cache key is incorrect
+            const result = await useCache(key, async () => {
+                return await client.issueSearch.searchForIssuesUsingJqlEnhancedSearch({
+                    jql: options.jql,
+                    maxResults: options.maxResults ?? 50,
+                    fields: options.fields ?? ['summary', 'status', 'parent'],
+                })
             })
 
             return (result.issues || []) as JiraIssue[]
