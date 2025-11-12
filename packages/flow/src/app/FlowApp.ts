@@ -18,7 +18,7 @@ import {
     useLayoutBlockRender,
     useTerminal,
 } from '@flowtorio/tui-terminal-kit'
-import { useJiraIssues } from '~/composables'
+import { useDatabase, useJiraIssues } from '~/composables'
 
 /**
  * Main Flow application
@@ -98,17 +98,7 @@ async function setupFlowApp(app: AppContext) {
         footerBlock,
     } = createBlocks()
 
-    // Jira data
-    // const jiraIssues = {
-    //     data: ref([]),
-    //     loading: ref(false),
-    //     error: ref<Error | null>(null),
-    //     async refresh() {
-    //         await new Promise((resolve) => setTimeout(resolve, 500)) // Simulate delay
-    //     },
-    // }
-
-    const jiraIssues = await useJiraIssues({
+    const jiraIssues = useJiraIssues({
         jql: `type in subTaskIssueTypes()
   and assignee = currentUser()
   and status != Done and status != "Don't Need"

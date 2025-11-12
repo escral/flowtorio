@@ -33,7 +33,7 @@ export interface JiraSearchOptions {
  */
 export function useJiraIssues(
     options: JiraSearchOptions,
-): Promise<UseAsyncDataReturn<JiraIssue[]>> {
+): UseAsyncDataReturn<JiraIssue[]> {
     const client = useJira()
 
     return useAsyncData<JiraIssue[]>(

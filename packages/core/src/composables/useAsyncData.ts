@@ -16,11 +16,11 @@ export interface UseAsyncDataReturn<T> {
 /**
  * Generic async data fetching with loading/error states (like Nuxt's useAsyncData)
  */
-export async function useAsyncData<T>(
+export function useAsyncData<T>(
     key: string,
     fetcher: () => Promise<T>,
     options: AsyncDataOptions = {},
-): Promise<UseAsyncDataReturn<T>> {
+): UseAsyncDataReturn<T> {
     const data = ref<T>()
     const loading = ref(false)
     const error = ref<Error>()
@@ -49,7 +49,8 @@ export async function useAsyncData<T>(
 
     // Execute immediately if specified
     if (options.immediate !== false) {
-        await fetch()
+        // noinspection ES6MissingAwait
+        fetch()
     }
 
     return {
