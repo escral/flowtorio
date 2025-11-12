@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { defineCommand, runMain } from 'citty'
+import { createMain, defineCommand, runCommand, runMain } from 'citty'
 import { loadFlowConfig, setConfig } from './config'
 import { createFlowApp } from './app/FlowApp'
 import packageInfo from '../package.json' assert { type: 'json' }
@@ -31,7 +31,7 @@ const main = defineCommand({
             setConfig(config)
 
             // Create and run the app
-            const app = createFlowApp()
+            const app = createFlowApp(args._)
             app.run()
         } catch (error) {
             console.error(error)

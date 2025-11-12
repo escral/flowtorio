@@ -1,5 +1,5 @@
 import { shallowReactive } from '@vue/reactivity'
-import { runCommand, type CommandDef } from 'citty'
+import { runCommand, type CommandDef, showUsage } from 'citty'
 
 export interface UseCommandsReturn {
     commands: Record<string, CommandDef>

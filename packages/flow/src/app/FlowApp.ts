@@ -18,20 +18,20 @@ import {
     useLayoutBlockRender,
     useTerminal,
 } from '@flowtorio/tui-terminal-kit'
-import { useDatabase, useJiraIssues } from '~/composables'
+import { useJiraIssues } from '~/composables'
 
 /**
  * Main Flow application
  */
-export function createFlowApp() {
-    return useApp(setupFlowApp)
+export function createFlowApp(args: string[] = []) {
+    return useApp(async (app: AppContext) => setupFlowApp(app, args))
 }
 
 /**
  * Setup Flow application logic
  * @todo Implement different views
  */
-async function setupFlowApp(app: AppContext) {
+async function setupFlowApp(app: AppContext, args: string[]) {
     const layout = useLayout()
     const commands = useCommands()
     const logger = useLogger()
@@ -172,7 +172,24 @@ async function setupFlowApp(app: AppContext) {
         async run() {
             await jiraIssues.refresh()
             logger.log(`Reloaded ${jiraIssues.data.value?.length || 0} issues`)
-            app.render()
+        },
+    }))
+
+    commands.register('random', defineCommand({
+        meta: {
+            name: 'random',
+            description: 'Generate a random number',
+        },
+        args: {
+            max: {
+                type: 'positional',
+                description: 'Maximum number (default 100)',
+            },
+        },
+        async run({ args }) {
+            const max = args.max ? parseInt(args.max as string, 10) : 100
+            const randomNumber = Math.floor(Math.random() * max)
+            logger.log(`Random number (0-${max}): ${randomNumber}`)
         },
     }))
 
@@ -193,4 +210,8 @@ async function setupFlowApp(app: AppContext) {
             app.render()
         },
     }))
+
+    if (args.length) {
+        await commands.execute(args.join(' '))
+    }
 }
