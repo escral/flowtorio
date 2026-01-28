@@ -1,5 +1,7 @@
 # Flowtorio — optimize the mess.
 
+> 🚧 Work in progress — expect changes.
+
 Tired of waiting for Jira to render its “new experimental interface”?<br>
 Flowtorio is your **terminal control center** for developer tools —
 a fast, **keyboard-driven workspace** that replaces slow, bloated UIs.
